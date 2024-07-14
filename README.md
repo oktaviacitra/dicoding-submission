@@ -8,32 +8,22 @@ Cuaca memainkan peran penting dalam kehidupan sehari-hari manusia. Prediksi cuac
 
 ## Business Understanding
 
-Pada bagian ini, kamu perlu menjelaskan proses klarifikasi masalah.
-
-Bagian laporan ini mencakup:
-
 ### Problem Statements
 
-Menjelaskan pernyataan masalah latar belakang:
-- Pernyataan Masalah 1
-- Pernyataan Masalah 2
-- Pernyataan Masalah n
+Berdasarkan latar belakang di atas, rincian masalahnya adalah sebagai berikut:
+- Apa algoritma yang sesuai untuk memprediksi cuaca yang berdampak signifikan pada sektor-sektor kritis seperti pertanian, transportasi, dan manajemen bencana?
+- Bagaimana cara menentukan hasil prediksi dari algoritma-algoritma Machine Learning dapat dikatakan optimal?
 
 ### Goals
 
-Menjelaskan tujuan dari pernyataan masalah:
-- Jawaban pernyataan masalah 1
-- Jawaban pernyataan masalah 2
-- Jawaban pernyataan masalah n
+Untuk menangani rincian masalah di atas, maka perlu dibuat tujuan sebagai berikut:
+- Membandingkan algoritma-algoritma klasifikasi untuk mendapatkan algoritma yang paling sesuai untuk sistem prediksi cuaca diantaranya Decision Tree, Random Forest, Support Vector Machine, K Nearest Neighbors, Gradient Boosting, Ada Boost, dan Extra Trees.
+- Melakukan evaluasi terhadap metrik dari masing-masing algoritma.
 
-Semua poin di atas harus diuraikan dengan jelas. Anda bebas menuliskan berapa pernyataan masalah dan juga goals yang diinginkan.
-
-**Rubrik/Kriteria Tambahan (Opsional)**:
-- Menambahkan bagian “Solution Statement” yang menguraikan cara untuk meraih goals. Bagian ini dibuat dengan ketentuan sebagai berikut: 
-
-    ### Solution statements
-    - Mengajukan 2 atau lebih solution statement. Misalnya, menggunakan dua atau lebih algoritma untuk mencapai solusi yang diinginkan atau melakukan improvement pada baseline model dengan hyperparameter tuning.
-    - Solusi yang diberikan harus dapat terukur dengan metrik evaluasi.
+### Solution statements
+Solusi yang dapat dilakukan untuk memenuhi goals proyek ini diantaranya sebagai berikut:
+- Membandingkan 7 algoritma sekaligus dalam bentuk tabel yang berisi metrik evaluasi.
+- Melakukan hyperparameter tuning terhadap 1 algoritma yang memiliki nilai paling unggul di metrik evaluasi.
 
 ## Data Understanding
 Paragraf awal bagian ini menjelaskan informasi mengenai data yang Anda gunakan dalam proyek. Sertakan juga sumber atau tautan untuk mengunduh dataset. Contoh: [UCI Machine Learning Repository](https://archive.ics.uci.edu/ml/datasets/Restaurant+%26+consumer+data).
