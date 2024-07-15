@@ -26,14 +26,25 @@ Solusi yang dapat dilakukan untuk memenuhi goals proyek ini diantaranya sebagai 
 - Melakukan hyperparameter tuning terhadap 1 algoritma yang memiliki nilai paling unggul di metrik evaluasi.
 
 ## Data Understanding
-Paragraf awal bagian ini menjelaskan informasi mengenai data yang Anda gunakan dalam proyek. Sertakan juga sumber atau tautan untuk mengunduh dataset. Contoh: [UCI Machine Learning Repository](https://archive.ics.uci.edu/ml/datasets/Restaurant+%26+consumer+data).
+Dataset yang digunakan pada proyek kali ini dibuat oleh Nikhil Narayan yang di upload ke Kaggle pada Juni 2024. Sumber dataset: [Weather Type Classification]([https://archive.ics.uci.edu/ml/datasets/Restaurant+%26+consumer+data](https://www.kaggle.com/datasets/nikhil7280/weather-type-classification)).
 
 Selanjutnya uraikanlah seluruh variabel atau fitur pada data. Sebagai contoh:  
 
-### Variabel-variabel pada Restaurant UCI dataset adalah sebagai berikut:
-- accepts : merupakan jenis pembayaran yang diterima pada restoran tertentu.
-- cuisine : merupakan jenis masakan yang disajikan pada restoran.
-- dst
+### Variabel-variabel pada dataset adalah sebagai berikut:
+| Nama | Jenis | Keterangan| Variabel |
+| --- | ----- | ------ | ------ |
+| Temperature | Numerik Kontinu | Suhu dalam derajat Celsius | Dependent |
+| Humidity | Numerik Diskrit | Persentase kelembapan | Dependent |
+| Wind Speed | Numerik Kontinu | Kecepatan angin dalam kilometer per jam | Dependent |
+| Precipitation | Numerik Diskrit | Persentase curah hujan | Dependent |
+| Cloud Cover | Kategorikal Ordinal | Kondisi awan | Dependent |
+| Atmospheric Pressure | Numerik Kontinu | Tekanan atmosfer dalam hPa | Dependent |
+| UV Index | Numerik Diskrit | Kekuatan radiasi ultraviolet | Dependent |
+| Season | Kategorikal Nominal | Kondisi musim | Dependent |
+| Visibility | Numerik Kontinu | Jarak maksimum di mana objek dapat terlihat dan dikenali dengan mata telanjang | Dependent |
+| Location | Kategorikal Ordinal | Jenis lokasi | Dependent |
+| Weather Type | Kategorikal Nominal | Jenis cuaca | Independent |
+
 
 **Rubrik/Kriteria Tambahan (Opsional)**:
 - Melakukan beberapa tahapan yang diperlukan untuk memahami data, contohnya teknik visualisasi data atau exploratory data analysis.
