@@ -49,7 +49,7 @@ Selanjutnya uraikanlah seluruh variabel atau fitur pada data. Sebagai contoh:
 ### Univariate
 Menggunakan 1.5xIQR rule, ditemukan 4 variabel mengandung outlier data, diantaranya:
 
-<img width="861" alt="Screenshot 2024-07-20 at 14 44 52" src="https://github.com/user-attachments/assets/949166b0-51a8-47ed-ae35-26861e088acb">
+<img width="813" alt="Screenshot 2024-07-20 at 23 56 26" src="https://github.com/user-attachments/assets/b1e5575d-2f8c-48b2-9f1e-1388f6bed241">
 
 Weather type merupakan variabel yang menjadi target pada proyek ini. Proyek ini menggunakan balanced dataset sehingga hal ini membantu mencegah overfitting pada kelas mayoritas selama pengembangan model machine learning sebab model tidak akan terlalu terfokus pada kelas mayoritas dan mengabaikan kelas minoritas.
 
@@ -57,7 +57,7 @@ Weather type merupakan variabel yang menjadi target pada proyek ini. Proyek ini 
 
 ### Multivariate
 
-
+![correlation matrixx](https://github.com/user-attachments/assets/43d0566d-cbbf-4ca1-8efb-d1c9ece40735)
 
 Berdasarkan heatmap diatas dapat diketahui bahwa
 
@@ -67,18 +67,43 @@ Berdasarkan heatmap diatas dapat diketahui bahwa
 | Wind Speed - UV Index | Tidak ada | -0.068147 |
 | Humidity - Visibility (km) | Negatif | -0.479969 |
 
-**Rubrik/Kriteria Tambahan (Opsional)**:
-- Melakukan beberapa tahapan yang diperlukan untuk memahami data, contohnya teknik visualisasi data atau exploratory data analysis.
-
 ## Data Preparation
-Pada bagian ini Anda menerapkan dan menyebutkan teknik data preparation yang dilakukan. Teknik yang digunakan pada notebook dan laporan harus berurutan.
+Berikut merupakan tahapan-tahapan dalam Data Preparation:
+- Mengganti nilai data outliers menggunakan [KNN Imputer](https://scikit-learn.org/stable/modules/generated/sklearn.impute.KNNImputer.html)
+  
+  <img width="821" alt="Screenshot 2024-07-20 at 23 57 44" src="https://github.com/user-attachments/assets/4c8a81e3-d50b-4974-8b18-1783a7016196">
 
-**Rubrik/Kriteria Tambahan (Opsional)**: 
-- Menjelaskan proses data preparation yang dilakukan
-- Menjelaskan alasan mengapa diperlukan tahapan data preparation tersebut.
+- Melakukan encoding terhadap variabel-variabel kategorikal
+
+  | Kolom | Encoding | Alasan |
+  | --- | ----- | ------ |
+  | Location | Label | nilai perlu menunjukkan tingkat dataran |
+  | Cloud cover | Label | nilai perlu menunjukkan tingkat kerapatan awan di langit |
+  | Season | One hot | nilai menunjukkan tidak ada urutan khusus |
+  
+- Melakukan normalisasi data ke semua variabel menggunakan [Standar Scaler](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html).
+
+  <img width="1522" alt="Screenshot 2024-07-21 at 00 04 58" src="https://github.com/user-attachments/assets/3f67f838-7198-4bc0-96af-8fdd8472c60c">
+
+- Memisahkan data menjadi dua jenis menggunakan [Train Test Split](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.train_test_split.html).
+
+  | Jenis | Persentase | Jumlah Baris |
+  | --- | ----- | ------ |
+  | Train | 90% | 11880 |
+  | Test | 10% | 1320 |
 
 ## Modeling
-Tahapan ini membahas mengenai model machine learning yang digunakan untuk menyelesaikan permasalahan. Anda perlu menjelaskan tahapan dan parameter yang digunakan pada proses pemodelan.
+Setelah data siap diproses lebih lanjut, maka akan dilanjutkan pada memilih metode terbaik untuk dapat memprediksi cuaca seakurat mungkin.
+
+| Nama | Kelebihan | Kekurangan |
+| --- | ----- | ------ |
+| Decision Tree | Mampu menangani hubungan non-linear antara fitur dan target | Struktur menjadi kompleks dan lambat untuk dibangun jika menangani data besar |
+| Random Forest | Mengurangi varians dan meningkatkan generalisasi model dengan menggabungkan prediksi dari banyak pohon | Membutuhkan banyak memori karena menghasilkan banyak decision tree | 
+| Support Vector Machine | Memiliki fleksibilitas dalam menangani data kompleks karena penggunaan kernel tricks | Kurang optimal pada dataset yang tidak seimbang karena cenderung fokus pada margin yang memaksimalkan kelas mayoritas | 
+| K Nearest Neighbors	 | dapat menangani data multikelas tanpa perlu modifikasi khusus | mudah terpengaruh oleh data yang noisy dan outliers yang dapat mengurangi akurasi model |
+| Gradient Boosting | Menghasilkan estimasi pentingnya fitur selama masa pembelajaran | Sensitif terhadap fitur-fitur yang tidak berkorelasi. |
+| Ada Boost | Mudah beradaptasi dengan data baru dan berubah dari waktu ke waktu karena sifatnya yang iteratif | sensitif terhadap noise dan outliers karena mempengaruhi pemberian bobot yang tidak sesuai pada iterasi berikutnya| 
+| Extra Trees | lebih cepat dalam pelatihan karena membagi node berdasarkan split points yang dipilih secara acak tanpa melakukan pencarian split optimal | kurang optimal pada dataset yang tidak seimbang tanpa penyesuaian tambahan | 
 
 **Rubrik/Kriteria Tambahan (Opsional)**: 
 - Menjelaskan kelebihan dan kekurangan dari setiap algoritma yang digunakan.
