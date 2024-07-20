@@ -93,7 +93,7 @@ Berikut merupakan tahapan-tahapan dalam Data Preparation:
   | Test | 10% | 1320 |
 
 ## Modeling
-Setelah data siap diproses lebih lanjut, maka akan dilanjutkan pada memilih metode terbaik untuk dapat memprediksi cuaca seakurat mungkin.
+Setelah data siap diproses lebih lanjut, maka akan dilanjutkan pada memilih metode terbaik untuk dapat memprediksi cuaca seakurat mungkin dengan bereksperimen menggunakan 7 metode berikut ini:
 
 | Nama | Kelebihan | Kekurangan |
 | --- | ----- | ------ |
@@ -105,26 +105,57 @@ Setelah data siap diproses lebih lanjut, maka akan dilanjutkan pada memilih meto
 | Ada Boost | Mudah beradaptasi dengan data baru dan berubah dari waktu ke waktu karena sifatnya yang iteratif | sensitif terhadap noise dan outliers karena mempengaruhi pemberian bobot yang tidak sesuai pada iterasi berikutnya| 
 | Extra Trees | lebih cepat dalam pelatihan karena membagi node berdasarkan split points yang dipilih secara acak tanpa melakukan pencarian split optimal | kurang optimal pada dataset yang tidak seimbang tanpa penyesuaian tambahan | 
 
-**Rubrik/Kriteria Tambahan (Opsional)**: 
-- Menjelaskan kelebihan dan kekurangan dari setiap algoritma yang digunakan.
-- Jika menggunakan satu algoritma pada solution statement, lakukan proses improvement terhadap model dengan hyperparameter tuning. **Jelaskan proses improvement yang dilakukan**.
-- Jika menggunakan dua atau lebih algoritma pada solution statement, maka pilih model terbaik sebagai solusi. **Jelaskan mengapa memilih model tersebut sebagai model terbaik**.
+Setelah memasukkan data yang telah diproses ke metode-metode tersebut dengan parameter default, maka yang dilakukan selanjutnya adalah membuat [Pipeline](https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.Pipeline.html) untuk diproses dengan [GridSearchCV](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html) agar bisa memilih berapa banyak fitur terbaik menggunakan [SelectKBest](https://scikit-learn.org/stable/modules/generated/sklearn.feature_selection.SelectKBest.html) dan mendapatkan parameter yang menghasilkan performa terbaik pada modelnya.
 
 ## Evaluation
-Pada bagian ini anda perlu menyebutkan metrik evaluasi yang digunakan. Lalu anda perlu menjelaskan hasil proyek berdasarkan metrik evaluasi yang digunakan.
+Proses evaluasi model pada proyek ini menggunakan 4 metrik berikut ini
 
-Sebagai contoh, Anda memiih kasus klasifikasi dan menggunakan metrik **akurasi, precision, recall, dan F1 score**. Jelaskan mengenai beberapa hal berikut:
-- Penjelasan mengenai metrik yang digunakan
-- Menjelaskan hasil proyek berdasarkan metrik evaluasi
+| Metrik | Pengertian | Rumus | 
+| --- | ----- | ------ | 
+| Akurasi | mengukur seberapa sering model prediksi benar secara keseluruhan | $`Jumlah Prediksi Benar / Jumlah Seluruh Prediksi`$ |
+| Precision | mengukur seberapa tepat model dalam memprediksi kelas positif | $`True Positive / True Positive + False Positive`$  |
+| Recall | mengukur seberapa baik model dalam menemukan semua contoh kelas positif | $`True Positive / True Positive + False Negative`$ |
+| F1 Score | mengukur keseimbangan antara precision dan recall | $`2 * ((precision * recall)/(precision+recall))`$ |
 
-Ingatlah, metrik evaluasi yang digunakan harus sesuai dengan konteks data, problem statement, dan solusi yang diinginkan.
+Hasil eksperimen semua model:
 
-**Rubrik/Kriteria Tambahan (Opsional)**: 
-- Menjelaskan formula metrik dan bagaimana metrik tersebut bekerja.
+<img width="521" alt="Screenshot 2024-07-21 at 01 46 22" src="https://github.com/user-attachments/assets/90f57a0a-e752-46c5-a2d4-e2e3d08550ae">
+
+Gradient boost mendapatkan nilai performa yang unggul dibanding dengan metode lain, sehingga untuk proses peningkatan performa menggunakan hyperparameter tuning, perlu berfokus pada Gradient boost saja. Berikut merupakan parameter-parameter yang dikombinasikan supaya mendapatkan performa terbaik.
+
+| Parameter | Nilai | Modul |
+| --- | ----- | ------ |
+| k | 10, 11, 12, 13 | SelectKBest |
+| learning_rate | 1.0, 0.1 | GradientBoostingClassifier|
+| criterion | 'friedman_mse', 'squared_error' | GradientBoostingClassifier|
+| max_features | 'sqrt', 'log2' | GradientBoostingClassifier|
+| loss | 'log_loss', 'exponential' | GradientBoostingClassifier|
+| max_depth | 3, 4 | GradientBoostingClassifier|
+
+Setelah mengkombinasikan parameter-parameter yang ada sebanyak 288 kali, maka diperoleh parameter sebagai berikut
+
+| Parameter | Nilai | Modul |
+| --- | ----- | ------ |
+| k | 12 ('Temperature', 'Humidity', 'Wind Speed', 'Precipitation (%)', 'Cloud Cover', 'Atmospheric Pressure', 'UV Index', 'Visibility (km)', 'Location', 'Spring', 'Summer', 'Winter'], dtype='object') | SelectKBest |
+| learning_rate | 0.1 | GradientBoostingClassifier|
+| criterion | 'squared_error' | GradientBoostingClassifier|
+| max_features | 'sqrt' | GradientBoostingClassifier|
+| loss | 'log_loss' | GradientBoostingClassifier|
+| max_depth | 3 | GradientBoostingClassifier|
+
+Setelah menerapkan parameter-parameter tersebut dalam model Gradient Boost, maka diperoleh metrik performa sebagai berikut:
+![cm](https://github.com/user-attachments/assets/ab015e05-2412-4a9d-af29-38142fb800b3)
+
+Pada proyek ini, metrik performa menggunakan rata-rata **micro** karena ingin mengetahui performa secara global dan general saja. Berikut merupakan perbandingan sebelum dan sesudah dilakukan hyperparameter tuning terhadap model Gradient Boost.
+
+| Metrik | Sebelum | Skor | 
+| --- | ----- | ------ | 
+| Accuracy | 0.901515 | 0.902272 |
+| Precision | 0.901515 | 0.902272 |
+| Recall | 0.901515 | 0.902272 |
+| F1 Score | 0.901515 | 0.902272 |
+
+Proyek ini menggunakan balanced dataset sehingga metrik performa menunjukkan nilai yang sama semua. Untuk perbandingan sebelum dan sesudah hyperparameter bisa disimpulkan bahwa peningkatan performa tidak signifikan karena hanya bertambah 0,000757 saja.
 
 **---Ini adalah bagian akhir laporan---**
-
-_Catatan:_
-- _Anda dapat menambahkan gambar, kode, atau tabel ke dalam laporan jika diperlukan. Temukan caranya pada contoh dokumen markdown di situs editor [Dillinger](https://dillinger.io/), [Github Guides: Mastering markdown](https://guides.github.com/features/mastering-markdown/), atau sumber lain di internet. Semangat!_
-- Jika terdapat penjelasan yang harus menyertakan code snippet, tuliskan dengan sewajarnya. Tidak perlu menuliskan keseluruhan kode project, cukup bagian yang ingin dijelaskan saja.
 
