@@ -26,7 +26,7 @@ Solusi yang dapat dilakukan untuk memenuhi goals proyek ini diantaranya sebagai 
 - Melakukan hyperparameter tuning terhadap 1 algoritma yang memiliki nilai paling unggul di metrik evaluasi.
 
 ## Data Understanding
-Dataset yang digunakan pada proyek kali ini dibuat oleh Nikhil Narayan yang di upload ke Kaggle pada Juni 2024. Sumber dataset: [Weather Type Classification]([https://archive.ics.uci.edu/ml/datasets/Restaurant+%26+consumer+data](https://www.kaggle.com/datasets/nikhil7280/weather-type-classification)).
+Dataset yang digunakan pada proyek kali ini dibuat oleh Nikhil Narayan yang di upload ke Kaggle pada Juni 2024. Sumber dataset: [Weather Type Classification](https://archive.ics.uci.edu/ml/datasets/Restaurant+%26+consumer+data](https://www.kaggle.com/datasets/nikhil7280/weather-type-classification)). Pada dataset ini terdiri dari 13200 baris dan 10 kolom data tanpa ada missing values.
 
 Selanjutnya uraikanlah seluruh variabel atau fitur pada data. Sebagai contoh:  
 
@@ -45,6 +45,27 @@ Selanjutnya uraikanlah seluruh variabel atau fitur pada data. Sebagai contoh:
 | Location | Kategorikal Ordinal | Jenis lokasi | Dependent |
 | Weather Type | Kategorikal Nominal | Jenis cuaca | Independent |
 
+### Exploratory Data Analysis
+### Univariate
+Menggunakan 1.5xIQR rule, ditemukan 4 variabel mengandung outlier data, diantaranya:
+
+<img width="861" alt="Screenshot 2024-07-20 at 14 44 52" src="https://github.com/user-attachments/assets/949166b0-51a8-47ed-ae35-26861e088acb">
+
+Weather type merupakan variabel yang menjadi target pada proyek ini. Proyek ini menggunakan balanced dataset sehingga hal ini membantu mencegah overfitting pada kelas mayoritas selama pengembangan model machine learning sebab model tidak akan terlalu terfokus pada kelas mayoritas dan mengabaikan kelas minoritas.
+
+![weather type](https://github.com/user-attachments/assets/17097a91-5969-4250-8426-83c4129106d6)
+
+### Multivariate
+
+
+
+Berdasarkan heatmap diatas dapat diketahui bahwa
+
+| Kolom | Korelasi | Skor | 
+| --- | ----- | ------ | 
+| Humidity - Precipitation (%) | Positif | 0.638631 |
+| Wind Speed - UV Index | Tidak ada | -0.068147 |
+| Humidity - Visibility (km) | Negatif | -0.479969 |
 
 **Rubrik/Kriteria Tambahan (Opsional)**:
 - Melakukan beberapa tahapan yang diperlukan untuk memahami data, contohnya teknik visualisasi data atau exploratory data analysis.
