@@ -16,9 +16,7 @@ Berdasarkan latar belakang di atas, rincian masalahnya adalah sebagai berikut:
 
 ### Goals
 
-Untuk menangani rincian masalah di atas, maka perlu dibuat tujuan sebagai berikut:
-- Membandingkan algoritma-algoritma klasifikasi untuk mendapatkan algoritma yang paling sesuai untuk sistem prediksi cuaca diantaranya Decision Tree, Random Forest, Support Vector Machine, K Nearest Neighbors, Gradient Boosting, Ada Boost, dan Extra Trees.
-- Melakukan evaluasi terhadap metrik dari masing-masing algoritma.
+Untuk menangani rincian masalah di atas, maka tujuan yang saya ajukan adalah membuat sistem prediksi jenis cuaca sehingga mengerti bagaimana antisipasi yang dilakukan agar tidak menimbulkan masalah lingkungan yang lebih besar.
 
 ### Solution statements
 Solusi yang dapat dilakukan untuk memenuhi goals proyek ini diantaranya sebagai berikut:
@@ -26,9 +24,9 @@ Solusi yang dapat dilakukan untuk memenuhi goals proyek ini diantaranya sebagai 
 - Melakukan hyperparameter tuning terhadap 1 algoritma yang memiliki nilai paling unggul di metrik evaluasi.
 
 ## Data Understanding
-Dataset yang digunakan pada proyek kali ini dibuat oleh Nikhil Narayan yang di upload ke Kaggle pada Juni 2024. Sumber dataset: [Weather Type Classification](https://archive.ics.uci.edu/ml/datasets/Restaurant+%26+consumer+data](https://www.kaggle.com/datasets/nikhil7280/weather-type-classification)). Pada dataset ini terdiri dari 13200 baris dan 10 kolom data tanpa ada missing values.
-
-Selanjutnya uraikanlah seluruh variabel atau fitur pada data. Sebagai contoh:  
+Dataset yang digunakan pada proyek kali ini dibuat oleh Nikhil Narayan yang di upload ke Kaggle pada Juni 2024. Sumber dataset: [Weather Type Classification](https://archive.ics.uci.edu/ml/datasets/Restaurant+%26+consumer+data](https://www.kaggle.com/datasets/nikhil7280/weather-type-classification)). Pada dataset ini terdiri dari 13200 baris dan 10 kolom data. Kondisi khusus dari data:
+- Data tidak memiliki baris atau kolom yang nilai hilang
+- Data tidak memiliki baris yang terduplikasi
 
 ### Variabel-variabel pada dataset adalah sebagai berikut:
 | Nama | Jenis | Keterangan| Variabel |
@@ -69,7 +67,7 @@ Berdasarkan heatmap diatas dapat diketahui bahwa
 
 ## Data Preparation
 Berikut merupakan tahapan-tahapan dalam Data Preparation:
-- Mengganti nilai data outliers menggunakan [KNN Imputer](https://scikit-learn.org/stable/modules/generated/sklearn.impute.KNNImputer.html)
+- Mengganti nilai data outliers menggunakan imputasi berbasis [KNN](https://scikit-learn.org/stable/modules/generated/sklearn.impute.KNNImputer.html) yang mengganti dengan nilai terdekatnya
   
   <img width="821" alt="Screenshot 2024-07-20 at 23 57 44" src="https://github.com/user-attachments/assets/4c8a81e3-d50b-4974-8b18-1783a7016196">
 
@@ -81,7 +79,7 @@ Berikut merupakan tahapan-tahapan dalam Data Preparation:
   | Cloud cover | Label | nilai perlu menunjukkan tingkat kerapatan awan di langit |
   | Season | One hot | nilai menunjukkan tidak ada urutan khusus |
   
-- Melakukan normalisasi data ke semua variabel menggunakan [Standar Scaler](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html).
+- Melakukan normalisasi data ke semua variabel menggunakan [Standar Scaler](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html) agar menyeragamkan rentang nilai setiap kolom.
 
   <img width="1522" alt="Screenshot 2024-07-21 at 00 04 58" src="https://github.com/user-attachments/assets/3f67f838-7198-4bc0-96af-8fdd8472c60c">
 
