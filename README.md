@@ -10,13 +10,11 @@ Cuaca memainkan peran penting dalam kehidupan sehari-hari manusia. Prediksi cuac
 
 ### Problem Statements
 
-Berdasarkan latar belakang di atas, rincian masalahnya adalah sebagai berikut:
-- Apa algoritma yang sesuai untuk memprediksi cuaca yang berdampak signifikan pada sektor-sektor kritis seperti pertanian, transportasi, dan manajemen bencana?
-- Bagaimana cara menentukan hasil prediksi dari algoritma-algoritma Machine Learning dapat dikatakan optimal?
+Berdasarkan latar belakang di atas, rincian masalahnya adalah diperlukan sistem model prediksi jenis cuaca yang akan datang dengan setepat mungkin.
 
 ### Goals
 
-Untuk menangani rincian masalah di atas, maka tujuan yang saya ajukan adalah membuat sistem prediksi jenis cuaca sehingga mengerti bagaimana antisipasi yang dilakukan agar tidak menimbulkan masalah lingkungan yang lebih besar.
+Untuk menangani rincian masalah di atas, maka tujuan yang saya ajukan adalah membuat sistem prediksi jenis cuaca dengan akurasi minimal 85% sehingga mengerti bagaimana antisipasi yang dilakukan agar tidak menimbulkan masalah lingkungan yang lebih besar.
 
 ### Solution statements
 Solusi yang dapat dilakukan untuk memenuhi goals proyek ini diantaranya sebagai berikut:
@@ -47,15 +45,15 @@ Dataset yang digunakan pada proyek kali ini dibuat oleh Nikhil Narayan yang di u
 ### Univariate
 Menggunakan 1.5xIQR rule, ditemukan 4 variabel mengandung outlier data, diantaranya:
 
-<img width="813" alt="Screenshot 2024-07-20 at 23 56 26" src="https://github.com/user-attachments/assets/b1e5575d-2f8c-48b2-9f1e-1388f6bed241">
+[Gambar Violion Plot yang Menunjukan Outlier](https://drive.google.com/file/d/1xwln9EgAaJpI60pvvMb8PZQOlJM8WpBy/view?usp=sharing)
 
 Weather type merupakan variabel yang menjadi target pada proyek ini. Proyek ini menggunakan balanced dataset sehingga hal ini membantu mencegah overfitting pada kelas mayoritas selama pengembangan model machine learning sebab model tidak akan terlalu terfokus pada kelas mayoritas dan mengabaikan kelas minoritas.
 
-![weather type](https://github.com/user-attachments/assets/17097a91-5969-4250-8426-83c4129106d6)
+[weather type](https://drive.google.com/file/d/1t4Qz7rqCpnAgxthHpp9p5kajBmn4pPZn/view?usp=sharing)
 
 ### Multivariate
 
-![correlation matrixx](https://github.com/user-attachments/assets/43d0566d-cbbf-4ca1-8efb-d1c9ece40735)
+[correlation matrixx](https://drive.google.com/file/d/14tpZL0fqTtIYWL93APBp3NN9QXopLLCz/view?usp=sharing)
 
 Berdasarkan heatmap diatas dapat diketahui bahwa
 
@@ -69,7 +67,7 @@ Berdasarkan heatmap diatas dapat diketahui bahwa
 Berikut merupakan tahapan-tahapan dalam Data Preparation:
 - Mengganti nilai data outliers menggunakan imputasi berbasis [KNN](https://scikit-learn.org/stable/modules/generated/sklearn.impute.KNNImputer.html) yang mengganti dengan nilai terdekatnya
   
-  <img width="821" alt="Screenshot 2024-07-20 at 23 57 44" src="https://github.com/user-attachments/assets/4c8a81e3-d50b-4974-8b18-1783a7016196">
+  [Violion plot setelah KNN Imputation](https://drive.google.com/file/d/1_x0EhA8N6ntewuPMDy3nIiuWpOrKiXR9/view?usp=sharing)
 
 - Melakukan encoding terhadap variabel-variabel kategorikal
 
@@ -142,7 +140,7 @@ Setelah mengkombinasikan parameter-parameter yang ada sebanyak 288 kali, maka di
 | max_depth | 3 | GradientBoostingClassifier|
 
 Setelah menerapkan parameter-parameter tersebut dalam model Gradient Boost, maka diperoleh metrik performa sebagai berikut:
-![cm](https://github.com/user-attachments/assets/ab015e05-2412-4a9d-af29-38142fb800b3)
+[Confusion Matrix](https://drive.google.com/file/d/1oDnaCtUkwUgS_CrOq1_ERHSIXWZREVrC/view?usp=sharing)
 
 Pada proyek ini, metrik performa menggunakan rata-rata **micro** karena ingin mengetahui performa secara global dan general saja. Berikut merupakan perbandingan sebelum dan sesudah dilakukan hyperparameter tuning terhadap model Gradient Boost.
 
@@ -154,6 +152,11 @@ Pada proyek ini, metrik performa menggunakan rata-rata **micro** karena ingin me
 | F1 Score | 0.901515 | 0.902272 |
 
 Proyek ini menggunakan balanced dataset sehingga metrik performa menunjukkan nilai yang sama semua. Untuk perbandingan sebelum dan sesudah hyperparameter bisa disimpulkan bahwa peningkatan performa tidak signifikan karena hanya bertambah 0,000757 saja.
+
+**Catatan:**
+- solusi sudah menjawab problem statement karena telah membuat model untuk memprediksi jenis cuaca yang akan datang berdasarkan data yang ada
+- sudah mencapai goals yang diharapkan karena berhasil membangun model yang memiliki akurasi lebih dari 85%
+- solusi yang direncakan berdampak pada hasil karena dapat mengetahui mana model yang paling maksimal untuk dataset ini dalam tugas prediksi kategorikal
 
 **---Ini adalah bagian akhir laporan---**
 
