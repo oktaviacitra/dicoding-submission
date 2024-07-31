@@ -96,21 +96,52 @@ Berikut merupakan tahapan-tahapan dalam Data Preparation:
 ## Modeling
 Setelah data siap diproses lebih lanjut, maka akan dilanjutkan pada memilih metode terbaik untuk dapat memprediksi cuaca seakurat mungkin dengan bereksperimen menggunakan 7 metode berikut ini:
 
-| Nama | Kelebihan | Kekurangan | Default Parameter|
-| --- | ----- | ------ | -----|
-| Decision Tree | Mampu menangani hubungan non-linear antara fitur dan target | Struktur menjadi kompleks dan lambat untuk dibangun jika menangani data besar | criterion='gini' | 
-| Random Forest | Mengurangi varians dan meningkatkan generalisasi model dengan menggabungkan prediksi dari banyak pohon | Membutuhkan banyak memori karena menghasilkan banyak decision tree | criterion='gini' | 
-| Support Vector Machine | Memiliki fleksibilitas dalam menangani data kompleks karena penggunaan kernel tricks | Kurang optimal pada dataset yang tidak seimbang karena cenderung fokus pada margin yang memaksimalkan kelas mayoritas | C=1.0, kernel='rbf' | 
-| K Nearest Neighbors	 | dapat menangani data multikelas tanpa perlu modifikasi khusus | mudah terpengaruh oleh data yang noisy dan outliers yang dapat mengurangi akurasi model | n_neighbors=5, weights='uniform'|
-| Gradient Boosting | Menghasilkan estimasi pentingnya fitur selama masa pembelajaran | Sensitif terhadap fitur-fitur yang tidak berkorelasi. | loss='log_loss', learning_rate=0.1 |
-| Ada Boost | Mudah beradaptasi dengan data baru dan berubah dari waktu ke waktu karena sifatnya yang iteratif | sensitif terhadap noise dan outliers karena mempengaruhi pemberian bobot yang tidak sesuai pada iterasi berikutnya| learning_rate=1.0 | 
-| Extra Trees | lebih cepat dalam pelatihan karena membagi node berdasarkan split points yang dipilih secara acak tanpa melakukan pencarian split optimal | kurang optimal pada dataset yang tidak seimbang tanpa penyesuaian tambahan | criterion='gini' |
+| Nama | Kelebihan | Kekurangan |
+| --- | ----- | ------ |
+| Decision Tree | Mampu menangani hubungan non-linear antara fitur dan target | Struktur menjadi kompleks dan lambat untuk dibangun jika menangani data besar |
+| Random Forest | Mengurangi varians dan meningkatkan generalisasi model dengan menggabungkan prediksi dari banyak pohon | Membutuhkan banyak memori karena menghasilkan banyak decision tree |
+| Support Vector Machine | Memiliki fleksibilitas dalam menangani data kompleks karena penggunaan kernel tricks | Kurang optimal pada dataset yang tidak seimbang karena cenderung fokus pada margin yang memaksimalkan kelas mayoritas | 
+| K Nearest Neighbors	 | dapat menangani data multikelas tanpa perlu modifikasi khusus | mudah terpengaruh oleh data yang noisy dan outliers yang dapat mengurangi akurasi model |
+| Gradient Boosting | Menghasilkan estimasi pentingnya fitur selama masa pembelajaran | Sensitif terhadap fitur-fitur yang tidak berkorelasi. | 
+| Ada Boost | Mudah beradaptasi dengan data baru dan berubah dari waktu ke waktu karena sifatnya yang iteratif | sensitif terhadap noise dan outliers karena mempengaruhi pemberian bobot yang tidak sesuai pada iterasi berikutnya| 
+| Extra Trees | lebih cepat dalam pelatihan karena membagi node berdasarkan split points yang dipilih secara acak tanpa melakukan pencarian split optimal | kurang optimal pada dataset yang tidak seimbang tanpa penyesuaian tambahan | 
 
 Tahapan yang dilakukan:
 - Melakukan looping for mencari algoritma machine learning dengan parameter default yang memiliki performa paling unggul dalam memprediksi kategori di dataset ini
 - Setelah menemukan algoritma machine learning paling unggul, maka algoritma machine learning tersebut akan dimasukkan ke hyperparameter tuning dengan [GridSearchCV](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html) untuk mencari parameter terbaik yang meningkatkan performa model
 - Selain melakukan hyperaparemeter tuning untuk mencari parameter terbaik pada algoritma machine learning, dilakukan pencarian fitur terbaik yang paling berperan pada penentuan prediksi menggunakan [SelectKBest](https://scikit-learn.org/stable/modules/generated/sklearn.feature_selection.SelectKBest.html).
 - Seleksi fitur dan pencarian parameter terbaik untuk algoritma machine learning dilakukan secara bersamaan menggunakan [Pipeline](https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.Pipeline.html).
+
+Berikut merupakan penjelasan setiap parameter yang digunakan:
+1. Decision Tree
+- criterion='gini', teknik pemisahan data untuk kategorisasi, 'gini' sering kali lebih cepat dalam komputasi
+- max_depth=None, kedalaman maksimum pohon, karena tidak membatasi kondisi yang terbagi untuk bisa sedetail mungkin
+- min_samples_split=2, jumlah minimum sampel yang diperlukan untuk membagi node internal, karena 2 mengindikasi kondisi yang detail dan tidak bisa dibagi lagi.
+2. Random Forest
+- n_estimators=100, jumlah pohon keputusan dalam hutan, 100 karena angka besar tapi tidak terlalu membebankan waktu komputasi
+- max_depth=None, kedalaman maksimum pohon, karena tidak membatasi kondisi yang terbagi untuk bisa sedetail mungkin
+- max_features='sqrt', jumlah fitur maksimum yang dipertimbangkan untuk membagi setiap node,  dengan mempertimbangkan hanya akar kuadrat dari total fitur pada setiap split, setiap pohon dalam hutan cenderung melihat subset fitur yang berbeda
+3. Support Vector Machine
+- C=1.0, pengontrol seberapa banyak kesalahan yang diizinkan dalam model yang mempengaruhi trade-off antara bias dan varians, memberikan keseimbangan yang wajar antara memaksimalkan margin pemisah dan meminimalkan kesalahan klasifikasi
+- kernel='rbf', menentukan ruang fitur di mana data akan diproyeksikan untuk menemukan hyperplane yang memisahkan kelas, rbf memiliki mekanisme menangani data yang tidak dapat dipisahkan secara linear dengan memproyeksikannya ke ruang dimensi yang lebih tinggi
+- gamma='scale', menentukan seberapa jauh pengaruh dari satu contoh pelatihan, memiliki mekanisme menyesuaikan nilai gamma berdasarkan jumlah fitur dalam data.
+4. K Nearest Neighbors
+- n_neighbors=5, menentukan jumlah tetangga terdekat yang akan digunakan untuk melakukan prediksi, outlier kurang bisa mempengaruhi hasil prediksi karena jika n_neighbors=1 bisa menyebabkan overfitting.
+- metric='minkowski', perhitungan jarak mempengaruhi cara jarak dihitung dan bagaimana kesamaan antara titik data diukur, metrik jarak lebih sensitif terhadap perbedaan dalam skala fitur.
+- weights='uniform', menentukan apakah semua tetangga memiliki bobot yang sama atau apakah tetangga yang lebih dekat memiliki pengaruh lebih besar, untuk menghindari overfitting bisa memberikan bobot yang sama terhadap semua tetangga terdekat
+5. Gradient Boosting
+- max_features=None, jumlah fitur maksimum yang dipertimbangkan untuk membagi setiap node,  untuk tidak membatasi fitue sebanyak-banyak dipertimbangkan dalam membagi setiap node
+- learning_rate=0.1, laju pembelajaran, 0.1 agar pembelajaran semakin teliti
+- loss='log_loss', mengukur seberapa baik probabilitas yang diprediksi sesuai dengan label kelas yang sebenarnya, diperuntukkan untuk klasifikasi
+- max_depth=3, kedalaman maksimum dalam membagi node, karena memelurkan komputasi yang cepat dan analisis model yang general
+6. Ada Boost
+- learning_rate=0.1, laju pembelajaran, 0.1 agar pembelajaran semakin teliti
+- n_estimators=50, jumlah pohon keputusan dalam hutan, berbeda dengan random forest memiliki kinerja lebih cepat, ada boost lebih kompleks sehingga memilih 50 untuk berada di tengah-tengah antara analisis model secara detail dan general
+- estimator=None, model dasar, tidak menggunakan model dasar yang lain untuk bisa mempercepat komputasi
+7. Extra Trees
+- n_estimators=100, jumlah pohon keputusan dalam hutan, 100 karena angka besar tapi tidak terlalu membebankan waktu komputasi
+- max_features='sqrt', jumlah fitur maksimum yang dipertimbangkan untuk membagi setiap node,  dengan mempertimbangkan hanya akar kuadrat dari total fitur pada setiap split, setiap pohon dalam hutan cenderung melihat subset fitur yang berbeda
+- max_depth=None, kedalaman maksimum pohon, karena tidak membatasi kondisi yang terbagi untuk bisa sedetail mungkin
 
 ## Evaluation
 Proses evaluasi model pada proyek ini menggunakan 4 metrik berikut ini
@@ -143,7 +174,7 @@ Setelah mengkombinasikan parameter-parameter yang ada sebanyak 288 kali, maka di
 | Parameter | Nilai | Modul |
 | --- | ----- | ------ |
 | k | 12 ('Temperature', 'Humidity', 'Wind Speed', 'Precipitation (%)', 'Cloud Cover', 'Atmospheric Pressure', 'UV Index', 'Visibility (km)', 'Location', 'Spring', 'Summer', 'Winter'], dtype='object') | SelectKBest |
-| learning_rate | 0.1 | GradientBoostingClassifier|
+| learning_rate | 1.0, 0.1 | GradientBoostingClassifier|
 | criterion | 'squared_error' | GradientBoostingClassifier|
 | max_features | 'sqrt' | GradientBoostingClassifier|
 | loss | 'log_loss' | GradientBoostingClassifier|
