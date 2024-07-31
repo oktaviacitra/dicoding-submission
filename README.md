@@ -11,8 +11,8 @@ Cuaca memainkan peran penting dalam kehidupan sehari-hari manusia. Prediksi cuac
 ### Problem Statements
 
 Berdasarkan latar belakang di atas, rincian masalahnya adalah 
-- Bagaimana mengolah data agar bisa masuk ke pemodelan?
-- Bagaimana membuat sistem prediksi cuaca yang dengan peforma seakurat mungkin (minimal akurasi 85%)?
+- Bagaimana mengolah data agar bisa masuk ke pemodelan prediksi agar meningkatkan ketepatan perkiraan guna antisipasi jenis cuaca yang akan terjadi?
+- Bagaimana membuat sistem prediksi cuaca yang dengan peforma seakurat mungkin (minimal akurasi 85%) agar sedikit kesalahan prediksi yang mengakibatkan biaya antisipasi banyak terbuangb sia-sia ?
 
 ### Goals
 
@@ -51,7 +51,8 @@ Menggunakan 1.5xIQR rule, ditemukan 4 variabel mengandung outlier data, diantara
 
 Weather type merupakan variabel yang menjadi target pada proyek ini. Proyek ini menggunakan balanced dataset sehingga hal ini membantu mencegah overfitting pada kelas mayoritas selama pengembangan model machine learning sebab model tidak akan terlalu terfokus pada kelas mayoritas dan mengabaikan kelas minoritas.
 
-<img width="810" alt="Screenshot 2024-07-30 at 14 59 31" src="https://github.com/user-attachments/assets/fa49abe9-cbd4-4427-b6a1-c45a507be0b9">
+<img width="802" alt="Screenshot 2024-07-30 at 14 56 58" src="https://github.com/user-attachments/assets/9e74f6ea-bc3f-41a3-8b89-795ca246c876">
+
 
 
 ### Multivariate
@@ -105,7 +106,11 @@ Setelah data siap diproses lebih lanjut, maka akan dilanjutkan pada memilih meto
 | Ada Boost | Mudah beradaptasi dengan data baru dan berubah dari waktu ke waktu karena sifatnya yang iteratif | sensitif terhadap noise dan outliers karena mempengaruhi pemberian bobot yang tidak sesuai pada iterasi berikutnya| learning_rate=1.0 | 
 | Extra Trees | lebih cepat dalam pelatihan karena membagi node berdasarkan split points yang dipilih secara acak tanpa melakukan pencarian split optimal | kurang optimal pada dataset yang tidak seimbang tanpa penyesuaian tambahan | criterion='gini' |
 
-Setelah memasukkan data yang telah diproses ke metode-metode tersebut dengan parameter default, maka yang dilakukan selanjutnya adalah membuat [Pipeline](https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.Pipeline.html) untuk diproses dengan [GridSearchCV](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html) agar bisa memilih berapa banyak fitur terbaik menggunakan [SelectKBest](https://scikit-learn.org/stable/modules/generated/sklearn.feature_selection.SelectKBest.html) dan mendapatkan parameter yang menghasilkan performa terbaik pada modelnya.
+Tahapan yang dilakukan:
+- Melakukan looping for mencari algoritma machine learning dengan parameter default yang memiliki performa paling unggul dalam memprediksi kategori di dataset ini
+- Setelah menemukan algoritma machine learning paling unggul, maka algoritma machine learning tersebut akan dimasukkan ke hyperparameter tuning dengan [GridSearchCV](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html) untuk mencari parameter terbaik yang meningkatkan performa model
+- Selain melakukan hyperaparemeter tuning untuk mencari parameter terbaik pada algoritma machine learning, dilakukan pencarian fitur terbaik yang paling berperan pada penentuan prediksi menggunakan [SelectKBest](https://scikit-learn.org/stable/modules/generated/sklearn.feature_selection.SelectKBest.html).
+- Seleksi fitur dan pencarian parameter terbaik untuk algoritma machine learning dilakukan secara bersamaan menggunakan [Pipeline](https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.Pipeline.html).
 
 ## Evaluation
 Proses evaluasi model pada proyek ini menggunakan 4 metrik berikut ini
@@ -121,7 +126,7 @@ Hasil eksperimen semua model:
 
 <img width="521" alt="Screenshot 2024-07-21 at 01 46 22" src="https://github.com/user-attachments/assets/90f57a0a-e752-46c5-a2d4-e2e3d08550ae">
 
-Gradient boost mendapatkan nilai performa yang unggul dibanding dengan metode lain, sehingga untuk proses peningkatan performa menggunakan hyperparameter tuning, perlu berfokus pada Gradient boost saja. Berikut merupakan parameter-parameter yang dikombinasikan supaya mendapatkan performa terbaik.
+Gradient boost mendapatkan nilai performa yang unggul dibanding dengan metode lain, sehingga untuk proses peningkatan performa menggunakan hyperparameter tuning, perlu berfokus pada Gradient boost saja. Berikut merupakan parameter-parameter yang dikombinasikan supaya mendapatkan performa terbaik. *berikut merupakan konfigurasi yang digunakan dalam hyperparameter tuning menggunakan GridSearchCV*.
 
 | Parameter | Nilai | Modul |
 | --- | ----- | ------ |
