@@ -161,5 +161,7 @@ Proyek ini menggunakan balanced dataset sehingga metrik performa menunjukkan nil
 - sudah mencapai goals yang diharapkan karena berhasil membangun model yang memiliki akurasi lebih dari 85%
 - solusi yang direncakan berdampak pada hasil karena dapat mengetahui mana model yang paling maksimal untuk dataset ini dalam tugas prediksi kategorikal
 
+Jika tidak tertampil gambarnya, mohon dibuka di https://github.com/oktaviacitra/dicoding-submission/blob/main/README.md
+
 **---Ini adalah bagian akhir laporan---**
 
