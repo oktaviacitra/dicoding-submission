@@ -22,7 +22,7 @@ Solusi yang dapat dilakukan untuk memenuhi goals proyek ini diantaranya sebagai 
 - Melakukan hyperparameter tuning terhadap 1 algoritma yang memiliki nilai paling unggul di metrik evaluasi.
 
 ## Data Understanding
-Dataset yang digunakan pada proyek kali ini dibuat oleh Nikhil Narayan yang di upload ke Kaggle pada Juni 2024. Sumber dataset: [Weather Type Classification](https://archive.ics.uci.edu/ml/datasets/Restaurant+%26+consumer+data](https://www.kaggle.com/datasets/nikhil7280/weather-type-classification)). Pada dataset ini terdiri dari 13200 baris dan 10 kolom data. Kondisi khusus dari data:
+Dataset yang digunakan pada proyek kali ini dibuat oleh Nikhil Narayan yang di upload ke Kaggle pada Juni 2024. Sumber dataset: [Weather Type Classification](https://www.kaggle.com/datasets/nikhil7280/weather-type-classification). Pada dataset ini terdiri dari 13200 baris dan 10 kolom data. Kondisi khusus dari data:
 - Data tidak memiliki baris atau kolom yang nilai hilang
 - Data tidak memiliki baris yang terduplikasi
 
@@ -45,15 +45,16 @@ Dataset yang digunakan pada proyek kali ini dibuat oleh Nikhil Narayan yang di u
 ### Univariate
 Menggunakan 1.5xIQR rule, ditemukan 4 variabel mengandung outlier data, diantaranya:
 
-[Gambar Violion Plot yang Menunjukan Outlier](https://drive.google.com/file/d/1xwln9EgAaJpI60pvvMb8PZQOlJM8WpBy/view?usp=sharing)
+<img width="802" alt="Screenshot 2024-07-30 at 14 56 58" src="https://github.com/user-attachments/assets/eb1ff713-0f26-4342-a134-0072e31501c9">
 
 Weather type merupakan variabel yang menjadi target pada proyek ini. Proyek ini menggunakan balanced dataset sehingga hal ini membantu mencegah overfitting pada kelas mayoritas selama pengembangan model machine learning sebab model tidak akan terlalu terfokus pada kelas mayoritas dan mengabaikan kelas minoritas.
 
-[weather type](https://drive.google.com/file/d/1t4Qz7rqCpnAgxthHpp9p5kajBmn4pPZn/view?usp=sharing)
+<img width="810" alt="Screenshot 2024-07-30 at 14 59 31" src="https://github.com/user-attachments/assets/fa49abe9-cbd4-4427-b6a1-c45a507be0b9">
+
 
 ### Multivariate
 
-[correlation matrixx](https://drive.google.com/file/d/14tpZL0fqTtIYWL93APBp3NN9QXopLLCz/view?usp=sharing)
+<img width="810" alt="Screenshot 2024-07-30 at 14 59 31" src="https://github.com/user-attachments/assets/9c97ce6a-118e-4b5f-bcd6-f83e05bc0f46">
 
 Berdasarkan heatmap diatas dapat diketahui bahwa
 
@@ -66,8 +67,9 @@ Berdasarkan heatmap diatas dapat diketahui bahwa
 ## Data Preparation
 Berikut merupakan tahapan-tahapan dalam Data Preparation:
 - Mengganti nilai data outliers menggunakan imputasi berbasis [KNN](https://scikit-learn.org/stable/modules/generated/sklearn.impute.KNNImputer.html) yang mengganti dengan nilai terdekatnya
-  
-  [Violion plot setelah KNN Imputation](https://drive.google.com/file/d/1_x0EhA8N6ntewuPMDy3nIiuWpOrKiXR9/view?usp=sharing)
+
+<img width="810" alt="Screenshot 2024-07-30 at 14 59 31" src="https://github.com/user-attachments/assets/f079c129-70a7-4a32-96c1-c68bdfac30b1">
+
 
 - Melakukan encoding terhadap variabel-variabel kategorikal
 
@@ -140,7 +142,8 @@ Setelah mengkombinasikan parameter-parameter yang ada sebanyak 288 kali, maka di
 | max_depth | 3 | GradientBoostingClassifier|
 
 Setelah menerapkan parameter-parameter tersebut dalam model Gradient Boost, maka diperoleh metrik performa sebagai berikut:
-[Confusion Matrix](https://drive.google.com/file/d/1oDnaCtUkwUgS_CrOq1_ERHSIXWZREVrC/view?usp=sharing)
+
+<img width="521" alt="Screenshot 2024-07-21 at 01 46 22" src="https://github.com/user-attachments/assets/b85b77d8-4267-4923-aa50-8054e18980d7">
 
 Pada proyek ini, metrik performa menggunakan rata-rata **micro** karena ingin mengetahui performa secara global dan general saja. Berikut merupakan perbandingan sebelum dan sesudah dilakukan hyperparameter tuning terhadap model Gradient Boost.
 
