@@ -2,9 +2,7 @@
 
 ## Domain Proyek
 
-Cuaca memainkan peran penting dalam kehidupan sehari-hari manusia. Prediksi cuaca yang akurat sangat penting untuk berbagai sektor, mulai dari pertanian, transportasi, hingga perencanaan bencana karena dapat memperkecil dampak yang terjadi akibat keadaan cuaca yang tidak menentu. Dalam beberapa dekade terakhir, kemajuan teknologi informasi dan kemampuan komputasi telah membuka peluang baru untuk meningkatkan akurasi prediksi cuaca melalui penggunaan machine learning.
-
-[Rhasyid, D. Y. L. A., Pramudita, B. A., & Istiqomah, I. (2023). Sistem Pemantauan Cuaca Berdasarkan Kecepatan Angin, Suhu dan Kelembaban Udara Berbasis Internet of Things. eProceedings of Engineering, 10(4).](https://openlibrarypublications.telkomuniversity.ac.id/index.php/engineering/article/download/20764/20289) 
+Cuaca memainkan peran penting dalam kehidupan sehari-hari manusia. Prediksi cuaca yang akurat sangat penting untuk berbagai sektor, mulai dari pertanian, transportasi, hingga perencanaan bencana karena dapat memperkecil dampak yang terjadi akibat keadaan cuaca yang tidak menentu. Dalam beberapa dekade terakhir, kemajuan teknologi informasi dan kemampuan komputasi telah membuka peluang baru untuk meningkatkan akurasi prediksi cuaca melalui penggunaan machine learning [1].
 
 ## Business Understanding
 
@@ -47,17 +45,18 @@ Dataset yang digunakan pada proyek kali ini dibuat oleh Nikhil Narayan yang di u
 ### Univariate
 Menggunakan 1.5xIQR rule, ditemukan 4 variabel mengandung outlier data, diantaranya:
 
-<img width="802" alt="Screenshot 2024-07-30 at 14 56 58" src="https://github.com/user-attachments/assets/eb1ff713-0f26-4342-a134-0072e31501c9">
+<img width="802" alt="Screenshot 2024-07-30 at 14 56 58" src="https://github.com/user-attachments/assets/aacd855c-8103-4fb9-8a11-a7ae4bf0ad6b">
+
 
 Weather type merupakan variabel yang menjadi target pada proyek ini. Proyek ini menggunakan balanced dataset sehingga hal ini membantu mencegah overfitting pada kelas mayoritas selama pengembangan model machine learning sebab model tidak akan terlalu terfokus pada kelas mayoritas dan mengabaikan kelas minoritas.
 
-<img width="802" alt="Screenshot 2024-07-30 at 14 56 58" src="https://github.com/user-attachments/assets/9e74f6ea-bc3f-41a3-8b89-795ca246c876">
-
+![download](https://github.com/user-attachments/assets/7468049f-aaff-4f25-b9e6-d64d8de448ef)
 
 
 ### Multivariate
 
-<img width="810" alt="Screenshot 2024-07-30 at 14 59 31" src="https://github.com/user-attachments/assets/9c97ce6a-118e-4b5f-bcd6-f83e05bc0f46">
+![corr](https://github.com/user-attachments/assets/6d65021e-ef33-4213-9686-b5b05b6523db)
+
 
 Berdasarkan heatmap diatas dapat diketahui bahwa
 
@@ -71,7 +70,7 @@ Berdasarkan heatmap diatas dapat diketahui bahwa
 Berikut merupakan tahapan-tahapan dalam Data Preparation:
 - Mengganti nilai data outliers menggunakan imputasi berbasis [KNN](https://scikit-learn.org/stable/modules/generated/sklearn.impute.KNNImputer.html) yang mengganti dengan nilai terdekatnya
 
-<img width="810" alt="Screenshot 2024-07-30 at 14 59 31" src="https://github.com/user-attachments/assets/f079c129-70a7-4a32-96c1-c68bdfac30b1">
+<img width="810" alt="Screenshot 2024-07-30 at 14 59 31" src="https://github.com/user-attachments/assets/90cae236-f7ea-49e2-984e-6f54be881ea5">
 
 
 - Melakukan encoding terhadap variabel-variabel kategorikal
@@ -84,7 +83,8 @@ Berikut merupakan tahapan-tahapan dalam Data Preparation:
   
 - Melakukan normalisasi data ke semua variabel menggunakan [Standar Scaler](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html) agar menyeragamkan rentang nilai setiap kolom.
 
-  <img width="1522" alt="Screenshot 2024-07-21 at 00 04 58" src="https://github.com/user-attachments/assets/3f67f838-7198-4bc0-96af-8fdd8472c60c">
+<img width="1451" alt="Screenshot 2024-07-31 at 16 01 36" src="https://github.com/user-attachments/assets/8684b98d-4984-4a25-a9be-9b03744f6617">
+
 
 - Memisahkan data menjadi dua jenis menggunakan [Train Test Split](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.train_test_split.html).
 
@@ -124,7 +124,8 @@ Proses evaluasi model pada proyek ini menggunakan 4 metrik berikut ini
 
 Hasil eksperimen semua model:
 
-<img width="521" alt="Screenshot 2024-07-21 at 01 46 22" src="https://github.com/user-attachments/assets/90f57a0a-e752-46c5-a2d4-e2e3d08550ae">
+<img width="470" alt="Screenshot 2024-07-31 at 16 02 03" src="https://github.com/user-attachments/assets/15baf439-3002-435d-829e-f8a0872fc806">
+
 
 Gradient boost mendapatkan nilai performa yang unggul dibanding dengan metode lain, sehingga untuk proses peningkatan performa menggunakan hyperparameter tuning, perlu berfokus pada Gradient boost saja. Berikut merupakan parameter-parameter yang dikombinasikan supaya mendapatkan performa terbaik. *berikut merupakan konfigurasi yang digunakan dalam hyperparameter tuning menggunakan GridSearchCV*.
 
@@ -150,7 +151,8 @@ Setelah mengkombinasikan parameter-parameter yang ada sebanyak 288 kali, maka di
 
 Setelah menerapkan parameter-parameter tersebut dalam model Gradient Boost, maka diperoleh metrik performa sebagai berikut:
 
-<img width="521" alt="Screenshot 2024-07-21 at 01 46 22" src="https://github.com/user-attachments/assets/b85b77d8-4267-4923-aa50-8054e18980d7">
+![confusionmatrix](https://github.com/user-attachments/assets/365b2438-6c75-4f2c-bc29-6839243f2423)
+
 
 Pada proyek ini, metrik performa menggunakan rata-rata **micro** karena ingin mengetahui performa secara global dan general saja. Berikut merupakan perbandingan sebelum dan sesudah dilakukan hyperparameter tuning terhadap model Gradient Boost.
 
@@ -170,5 +172,8 @@ Proyek ini menggunakan balanced dataset sehingga metrik performa menunjukkan nil
 
 Jika tidak tertampil gambarnya, mohon dibuka di https://github.com/oktaviacitra/dicoding-submission/blob/main/README.md
 
+
+**Referensi**
+[1] [Rhasyid, D. Y. L. A., Pramudita, B. A., & Istiqomah, I. (2023). Sistem Pemantauan Cuaca Berdasarkan Kecepatan Angin, Suhu dan Kelembaban Udara Berbasis Internet of Things. eProceedings of Engineering, 10(4).](https://openlibrarypublications.telkomuniversity.ac.id/index.php/engineering/article/download/20764/20289) 
 **---Ini adalah bagian akhir laporan---**
 
