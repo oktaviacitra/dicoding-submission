@@ -45,7 +45,7 @@ Dataset yang digunakan pada proyek kali ini dibuat oleh Nikhil Narayan yang di u
 ### Univariate
 Menggunakan 1.5xIQR rule, ditemukan 4 variabel mengandung outlier data, diantaranya:
 
-<img width="802" alt="Screenshot 2024-07-30 at 14 56 58" src="https://github.com/user-attachments/assets/aacd855c-8103-4fb9-8a11-a7ae4bf0ad6b">
+![Outlier data](https://github.com/user-attachments/assets/aacd855c-8103-4fb9-8a11-a7ae4bf0ad6b)
 
 
 Weather type merupakan variabel yang menjadi target pada proyek ini. Proyek ini menggunakan balanced dataset sehingga hal ini membantu mencegah overfitting pada kelas mayoritas selama pengembangan model machine learning sebab model tidak akan terlalu terfokus pada kelas mayoritas dan mengabaikan kelas minoritas.
@@ -70,7 +70,7 @@ Berdasarkan heatmap diatas dapat diketahui bahwa
 Berikut merupakan tahapan-tahapan dalam Data Preparation:
 - Mengganti nilai data outliers menggunakan imputasi berbasis [KNN](https://scikit-learn.org/stable/modules/generated/sklearn.impute.KNNImputer.html) yang mengganti dengan nilai terdekatnya
 
-<img width="810" alt="Screenshot 2024-07-30 at 14 59 31" src="https://github.com/user-attachments/assets/90cae236-f7ea-49e2-984e-6f54be881ea5">
+![viloin plot](https://github.com/user-attachments/assets/90cae236-f7ea-49e2-984e-6f54be881ea5)
 
 
 - Melakukan encoding terhadap variabel-variabel kategorikal
@@ -83,7 +83,7 @@ Berikut merupakan tahapan-tahapan dalam Data Preparation:
   
 - Melakukan normalisasi data ke semua variabel menggunakan [Standar Scaler](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html) agar menyeragamkan rentang nilai setiap kolom.
 
-<img width="1451" alt="Screenshot 2024-07-31 at 16 01 36" src="https://github.com/user-attachments/assets/8684b98d-4984-4a25-a9be-9b03744f6617">
+![describe](https://github.com/user-attachments/assets/8684b98d-4984-4a25-a9be-9b03744f6617)
 
 
 - Memisahkan data menjadi dua jenis menggunakan [Train Test Split](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.train_test_split.html).
@@ -155,7 +155,7 @@ Proses evaluasi model pada proyek ini menggunakan 4 metrik berikut ini
 
 Hasil eksperimen semua model:
 
-<img width="470" alt="Screenshot 2024-07-31 at 16 02 03" src="https://github.com/user-attachments/assets/15baf439-3002-435d-829e-f8a0872fc806">
+![table](https://github.com/user-attachments/assets/15baf439-3002-435d-829e-f8a0872fc806)
 
 
 Gradient boost mendapatkan nilai performa yang unggul dibanding dengan metode lain, sehingga untuk proses peningkatan performa menggunakan hyperparameter tuning, perlu berfokus pada Gradient boost saja. Berikut merupakan parameter-parameter yang dikombinasikan supaya mendapatkan performa terbaik. *berikut merupakan konfigurasi yang digunakan dalam hyperparameter tuning menggunakan GridSearchCV*.
