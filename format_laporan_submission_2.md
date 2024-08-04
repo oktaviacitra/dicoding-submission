@@ -33,10 +33,14 @@ Berdasarkan latar belakang di atas, rincian masalahnya adalah
 
 Untuk menjawab pertanyaan masalah di atas, maka akan dijabarkan sebagai berikut:
 - Model yang cocok untuk menyelesaikan masalah tersebut adalah model yang berbasis dengan konten atau biasa disebut Content-Based Filtering.
-- Melakukan evaluasi precision@N terhadap metrik dari model sistem rekomendasi film
+- Melakukan evaluasi model sistem rekomendasi film dengan metrik precision@N 85%
 
 ### Solution statements
-- Mengajukan 2 atau lebih solution approach (algoritma atau pendekatan sistem rekomendasi).
+Solusi yang dapat dilakukan untuk memenuhi goals proyek ini diantaranya sebagai berikut:
+
+- Mengolah data teks berkaitan dengan informasi film menjadi vektor yang bisa dihitung nilai kemiripannya
+- Menampilkan detail data yang diuji dengan hasilnya untuk validasi kebenaran dari nilai metriknya
+
 
 ## Data Understanding
 Paragraf awal bagian ini menjelaskan informasi mengenai jumlah data, kondisi data, dan informasi mengenai data yang digunakan. Sertakan juga sumber atau tautan untuk mengunduh dataset. Contoh: [UCI Machine Learning Repository](https://archive.ics.uci.edu/ml/datasets/Restaurant+%26+consumer+data).
