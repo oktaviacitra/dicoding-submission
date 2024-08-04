@@ -36,24 +36,36 @@ Untuk menjawab pertanyaan masalah di atas, maka akan dijabarkan sebagai berikut:
 - Melakukan evaluasi model sistem rekomendasi film dengan metrik precision@N 85%
 
 ### Solution statements
-Solusi yang dapat dilakukan untuk memenuhi goals proyek ini diantaranya sebagai berikut:
 
+Solusi yang dapat dilakukan untuk memenuhi goals proyek ini diantaranya sebagai berikut:
 - Mengolah data teks berkaitan dengan informasi film menjadi vektor yang bisa dihitung nilai kemiripannya
 - Menampilkan detail data yang diuji dengan hasilnya untuk validasi kebenaran dari nilai metriknya
 
 
 ## Data Understanding
-Paragraf awal bagian ini menjelaskan informasi mengenai jumlah data, kondisi data, dan informasi mengenai data yang digunakan. Sertakan juga sumber atau tautan untuk mengunduh dataset. Contoh: [UCI Machine Learning Repository](https://archive.ics.uci.edu/ml/datasets/Restaurant+%26+consumer+data).
+Dataset yang digunakan pada proyek kali ini dibuat oleh Nikhil Narayan yang di upload ke Kaggle pada Juni 2024. Sumber dataset: Weather Type Classification. Pada dataset ini terdiri dari 5043 baris dan 28 kolom data. Kondisi khusus dari data:
+- memiliki jenis tipe data yang beragam untuk kolom-kolom yang ada diantaranya float64, int64, dan object
+- terdapat 6 kolom yang memiliki nilai yang penuh atau tidak memiliki nilai hilang
 
-Selanjutnya, uraikanlah seluruh variabel atau fitur pada data. Sebagai contoh:  
+Karena terdapat 28 kolom, sedangkan pembangun model pada proyek ini menggunakan content-based filter yang menyeleksi data yang mirip berdasarkan isinya, maka perlu dilakukan seleksi kolom dan menghasilkan dataframe yang memiliki 3 kolom penting berikut ini:
 
-Variabel-variabel pada Restaurant UCI dataset adalah sebagai berikut:
-- accepts : merupakan jenis pembayaran yang diterima pada restoran tertentu.
-- cuisine : merupakan jenis masakan yang disajikan pada restoran.
-- dst
+|Nama|Jenis|Tipe Data|Alasan|Jumlah Nilai Unik|
+|----|-----|---------|------|-----------------|
+|movie_title|independent|object|diperlukan untuk mencari film-film yang mirip dan mengembalikan nilai dalam bentuk nama-nama filmnya|4917|
+|genres|dependent|object|mewakili representasi dari sebuah film memiliki jalan cerita seperti apa|914|
+|content_rating|dependent|object|identifikasi mengenai segmen target penonton film|19|
 
-**Rubrik/Kriteria Tambahan (Opsional)**:
-- Melakukan beberapa tahapan yang diperlukan untuk memahami data, contohnya teknik visualisasi data beserta insight atau exploratory data analysis.
+Pada proyek ini, hanya melakukan EDA Univariate karena hanya terdapat 2 data kategorikal yang bisa amati distribusinya. Karena nilai unik berjumlah sangat banyak di 2 kolom tersebut, maka ditampilkan horizontal bar chart untuk nilai yang memiliki kemunculan paling banyak
+
+|Nama|Chart|Analisis|
+|----|-----|--------|
+|genres|![genre chart](https://github.com/user-attachments/assets/c0180fd2-9940-4062-bc99-3ad2edc955ff)|Sebagian besar film yang memiliki genre drama|
+|rating|![rating chart](https://github.com/user-attachments/assets/16f8b66c-94cf-4d48-ad39-9b128c05de71)|Sebagian besar film yang memiliki rating content R|
+
+Yang dilakukan pada tahap ini diantaranya:
+- Melihat ringkasan informasi struktur data dengan fungsi .info()
+- Menghapus kolom-kolom yang lainnya selain movie_title, genres, dan content_rating
+- Memeriksa jumlah nilai unik pada setiap kolom
 
 ## Data Preparation
 Pada bagian ini Anda menerapkan dan menyebutkan teknik data preparation yang dilakukan. Teknik yang digunakan pada notebook dan laporan harus berurutan.
