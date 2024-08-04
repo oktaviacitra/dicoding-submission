@@ -25,7 +25,9 @@ Seiring berjalannya waktu, ribuan film dirilis di seluruh dunia dari semua platf
 
 ### Problem Statements
 
-- 
+Berdasarkan latar belakang di atas, rincian masalahnya adalah
+- Bagaimana mengolah data agar bisa masuk ke pemodelan rekomendasi film-film yang banyak memiliki kemiripan?
+- Bagaimana membuat sistem rekomendasi film yang dengan peforma seakurat mungkin (minimal precision@N 85%) agar dapat meningkatkan ketertarikan pengguna?
 
 ### Goals
 
