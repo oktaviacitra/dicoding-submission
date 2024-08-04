@@ -3,7 +3,6 @@
 ## Project Overview
 
 
-
 **Rubrik/Kriteria Tambahan (Opsional)**:
 - Jelaskan mengapa proyek ini penting untuk diselesaikan.
 - Menyertakan hasil riset terkait atau referensi. Referensi yang diberikan harus berasal dari sumber yang kredibel dan author yang jelas.
@@ -14,12 +13,19 @@
 
 Dalam merumuskan proyek ini dibangun latar belakang, tujuan, dan pernyataan solusi seperti di bawah ini.
 
-### Problem Statements
+### Background
 
-Ribuan film dirilis di seluruh dunia setiap harinya di semua platform dan negara, sehingga menemukan film yang cocok menjadi bagian dari kehidupan hiburan dari sejak awal munculnya banyak industri film [1]. Terdapat berbagai genre di industri film yang membuat orang-orang tidak sempat menjelajah banyak genre dalam rentang waktu yang singkat [2]. orang-orang dapat menonton semua film yang ada di Netflix. Oleh karena itu, penelitian ini akan mengembangkan sistem rekomendasi yang dapat memudahkan pengguna Netflix untuk menentukan jenis film apa yang akan mereka tonton.
+Seiring berjalannya waktu, ribuan film dirilis di seluruh dunia dari semua platform dan negara, sehingga menemukan film yang cocok menjadi bagian dari kehidupan hiburan dari sejak awal munculnya banyak industri film [1]. Terdapat berbagai genre di industri film yang membuat orang-orang tidak sempat menjelajah banyak genre karena keterbatasan waktu atau biaya [2]. Salah satu fitur umum yang disediakan oleh layanan aplikasi streaming adalah sistem yang menampilkan semua film yang berasal dari beragam tahun dan negara produksi, tidak hanya menampilkan film-film terbaru sehingga pengguna akan tertarik memanfaatka fiturnya[3].
 
 [1] https://iopscience.iop.org/article/10.1088/1742-6596/1916/1/012052
+
 [2] https://ieeexplore.ieee.org/document/10055248/
+
+[3] Movie recommender systems using hybrid model based on graphs with co-rated, genre, and closed caption features
+
+### Problem Statements
+
+- 
 
 ### Goals
 
