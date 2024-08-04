@@ -2,26 +2,24 @@
 
 ## Project Overview
 
-
-**Rubrik/Kriteria Tambahan (Opsional)**:
-- Jelaskan mengapa proyek ini penting untuk diselesaikan.
-- Menyertakan hasil riset terkait atau referensi. Referensi yang diberikan harus berasal dari sumber yang kredibel dan author yang jelas.
-  
-  Format Referensi: [Judul Referensi](https://scholar.google.com/) 
-
-## Business Understanding
-
-Dalam merumuskan proyek ini dibangun latar belakang, tujuan, dan pernyataan solusi seperti di bawah ini.
+Pada proyek kali ini akan dibangun sistem rekomendasi film yang memberikan hasil berupa daftar film yang memiliki kemiripan (output) dengan karakteristik film yang diberikan 
+(input).
 
 ### Background
 
-Seiring berjalannya waktu, ribuan film dirilis di seluruh dunia dari semua platform dan negara, sehingga menemukan film yang cocok menjadi bagian dari kehidupan hiburan dari sejak awal munculnya banyak industri film [1]. Terdapat berbagai genre di industri film yang membuat orang-orang tidak sempat menjelajah banyak genre karena keterbatasan waktu atau biaya [2]. Salah satu fitur umum yang disediakan oleh layanan aplikasi streaming adalah sistem yang menampilkan semua film yang berasal dari beragam tahun dan negara produksi, tidak hanya menampilkan film-film terbaru sehingga pengguna akan tertarik memanfaatka fiturnya[3].
+Seiring berjalannya waktu, ribuan film dirilis di seluruh dunia dari semua platform dan negara, sehingga menemukan film yang cocok menjadi bagian dari kehidupan hiburan dari sejak awal munculnya banyak industri film [1]. Terdapat berbagai genre di industri film yang membuat orang-orang tidak sempat menjelajah banyak genre karena keterbatasan waktu atau biaya [2]. Salah satu fitur umum yang disediakan oleh layanan aplikasi streaming adalah sistem yang menampilkan semua film yang berasal dari beragam tahun dan negara produksi, tidak hanya menampilkan film-film terbaru sehingga pengguna akan tertarik memanfaatka fiturnya[3]. Sistem rekomendasi bermanfaat bagi pelanggan dan perusahaan pemilik aplikasi, karena semakin puas pelanggan, semakin besar kemungkinan pengguna ingin menggunakan sistem untuk kemudahan dalam mengoperasikan aplikasi, sehingga akan berpeluang menambah pendapatan perusahaan [4].
 
 [1] https://iopscience.iop.org/article/10.1088/1742-6596/1916/1/012052
 
 [2] https://ieeexplore.ieee.org/document/10055248/
 
 [3] Movie recommender systems using hybrid model based on graphs with co-rated, genre, and closed caption features
+
+[4] Movie Recommender System Using Collaborative Filtering
+
+## Business Understanding
+
+Dalam merumuskan proyek ini dibangun penyataan masalah, tujuan, dan pernyataan solusi seperti di bawah ini.
 
 ### Problem Statements
 
@@ -40,7 +38,6 @@ Untuk menjawab pertanyaan masalah di atas, maka akan dijabarkan sebagai berikut:
 Solusi yang dapat dilakukan untuk memenuhi goals proyek ini diantaranya sebagai berikut:
 - Mengolah data teks berkaitan dengan informasi film menjadi vektor yang bisa dihitung nilai kemiripannya
 - Menampilkan detail data yang diuji dengan hasilnya untuk validasi kebenaran dari nilai metriknya
-
 
 ## Data Understanding
 Dataset yang digunakan pada proyek kali ini dibuat oleh Nikhil Narayan yang di upload ke Kaggle pada Juni 2024. Sumber dataset: Weather Type Classification. Pada dataset ini terdiri dari 5043 baris dan 28 kolom data. Kondisi khusus dari data:
@@ -68,11 +65,14 @@ Yang dilakukan pada tahap ini diantaranya:
 - Memeriksa jumlah nilai unik pada setiap kolom
 
 ## Data Preparation
-Pada bagian ini Anda menerapkan dan menyebutkan teknik data preparation yang dilakukan. Teknik yang digunakan pada notebook dan laporan harus berurutan.
-
-**Rubrik/Kriteria Tambahan (Opsional)**: 
-- Menjelaskan proses data preparation yang dilakukan
-- Menjelaskan alasan mengapa diperlukan tahapan data preparation tersebut.
+Pada tahap ini perlu mempersiapkan data agar mudah diproses oleh model, apalagi jika masih mengandung kolom-kolom yang bertipe data object yang perlu dilakukan encoding untuk mengubahnya menjadi numerik supaya dapat dihitung nilai cosine similarity nya. Yang dilakukan pada tahap ini diantaranya:
+|Aktifitas|Alasan|Ukuran dataset semula|Ukuran dataset sesudah preproses|
+|---------|------|---------------------|--------------------------------|
+|menghapus nilai \xa0 pada kolom movie_title|agar tidak menjadi noise ketika pengguna mau mencari rekomendasi berdasarkan film yang sudah ditontonnya|(5043,3)|(5043,3)|
+|menghapus baris duplikat|karena nilai unik pada kolom movie_title sejumlah 4917 sehingga terdapat kemungkinan banyak baris data yang duplikat|(5043,3)|(4919,3)|
+|menghapus baris data yang memiliki nilai hilang|tidak bisa dilakukan imputasi karena akan menyebabkan kesalahan analitik|(4919,3)|(4618,3)|
+|melakukan one hot encoding terhadap kolom genres|supaya dapat dihitung nilai cosine similaritynya dengan representasi vektornya|(4618,3)|(4618,26)|
+|melakukan one hot encoding terhadap kolom content_rating|supaya dapat dihitung nilai cosine similaritynya dengan representasi vektornya|(4618,26)|(4618,43)|
 
 ## Modeling
 Tahapan ini membahas mengenai model sisten rekomendasi yang Anda buat untuk menyelesaikan permasalahan. Sajikan top-N recommendation sebagai output.
