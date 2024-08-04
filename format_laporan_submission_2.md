@@ -1,8 +1,8 @@
-# Laporan Proyek Machine Learning - Nama Anda
+# Laporan Proyek Machine Learning - Oktavia Citra Resmi Rachmawati
 
 ## Project Overview
 
-Pada bagian ini, Kamu perlu menuliskan latar belakang yang relevan dengan proyek yang diangkat.
+
 
 **Rubrik/Kriteria Tambahan (Opsional)**:
 - Jelaskan mengapa proyek ini penting untuk diselesaikan.
@@ -12,16 +12,14 @@ Pada bagian ini, Kamu perlu menuliskan latar belakang yang relevan dengan proyek
 
 ## Business Understanding
 
-Pada bagian ini, Anda perlu menjelaskan proses klarifikasi masalah.
-
-Bagian laporan ini mencakup:
+Dalam merumuskan proyek ini dibangun latar belakang, tujuan, dan pernyataan solusi seperti di bawah ini.
 
 ### Problem Statements
 
-Menjelaskan pernyataan masalah:
-- Pernyataan Masalah 1
-- Pernyataan Masalah 2
-- Pernyataan Masalah n
+Ribuan film dirilis di seluruh dunia setiap harinya di semua platform dan negara, sehingga menemukan film yang cocok menjadi bagian dari kehidupan hiburan dari sejak awal munculnya banyak industri film [1]. Terdapat berbagai genre di industri film yang membuat orang-orang tidak sempat menjelajah banyak genre dalam rentang waktu yang singkat [2]. orang-orang dapat menonton semua film yang ada di Netflix. Oleh karena itu, penelitian ini akan mengembangkan sistem rekomendasi yang dapat memudahkan pengguna Netflix untuk menentukan jenis film apa yang akan mereka tonton.
+
+[1] https://iopscience.iop.org/article/10.1088/1742-6596/1916/1/012052
+[2] https://ieeexplore.ieee.org/document/10055248/
 
 ### Goals
 
