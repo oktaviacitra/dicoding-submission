@@ -2,20 +2,11 @@
 
 ## Project Overview
 
-Pada proyek kali ini akan dibangun sistem rekomendasi film yang memberikan hasil berupa daftar film yang memiliki kemiripan (output) dengan karakteristik film yang diberikan 
-(input).
+Pada proyek kali ini akan dibangun sistem rekomendasi film yang memberikan hasil berupa daftar film yang memiliki kemiripan (output) dengan karakteristik film yang diberikan (input).
 
 ### Background
 
 Seiring berjalannya waktu, ribuan film dirilis di seluruh dunia dari semua platform dan negara, sehingga menemukan film yang cocok menjadi bagian dari kehidupan hiburan dari sejak awal munculnya banyak industri film [1]. Terdapat berbagai genre di industri film yang membuat orang-orang tidak sempat menjelajah banyak genre karena keterbatasan waktu atau biaya [2]. Salah satu fitur umum yang disediakan oleh layanan aplikasi streaming adalah sistem yang menampilkan semua film yang berasal dari beragam tahun dan negara produksi, tidak hanya menampilkan film-film terbaru sehingga pengguna akan tertarik memanfaatka fiturnya[3]. Sistem rekomendasi bermanfaat bagi pelanggan dan perusahaan pemilik aplikasi, karena semakin puas pelanggan, semakin besar kemungkinan pengguna ingin menggunakan sistem untuk kemudahan dalam mengoperasikan aplikasi, sehingga akan berpeluang menambah pendapatan perusahaan [4].
-
-[1] https://iopscience.iop.org/article/10.1088/1742-6596/1916/1/012052
-
-[2] https://ieeexplore.ieee.org/document/10055248/
-
-[3] Movie recommender systems using hybrid model based on graphs with co-rated, genre, and closed caption features
-
-[4] Movie Recommender System Using Collaborative Filtering
 
 ## Business Understanding
 
@@ -36,7 +27,7 @@ Untuk menjawab pertanyaan masalah di atas, maka akan dijabarkan sebagai berikut:
 ### Solution statements
 
 Solusi yang dapat dilakukan untuk memenuhi goals proyek ini diantaranya sebagai berikut:
-- Mengolah data teks berkaitan dengan informasi film menjadi vektor yang bisa dihitung nilai kemiripannya
+- Mengolah data teks berkaitan dengan informasi film menjadi numerikal yang bisa dihitung nilai kemiripannya
 - Menampilkan detail data yang diuji dengan hasilnya untuk validasi kebenaran dari nilai metriknya
 
 ## Data Understanding
@@ -75,22 +66,36 @@ Pada tahap ini perlu mempersiapkan data agar mudah diproses oleh model, apalagi 
 |melakukan one hot encoding terhadap kolom content_rating|supaya dapat dihitung nilai cosine similaritynya dengan representasi vektornya|(4618,26)|(4618,43)|
 
 ## Modeling
-Tahapan ini membahas mengenai model sisten rekomendasi yang Anda buat untuk menyelesaikan permasalahan. Sajikan top-N recommendation sebagai output.
+Yang dilakukan pada tahap ini diantaranya:
+- Kolom genres dan content_rating telah melalui proses encoding yang membuat bentuk datanya seperti telah melalui proses Binary Count Vectorizer dari modul sklearn. Pada proyek kali ini, tidak perlu menggunakn term-frequency karena dalam satu baris tidak ada perulangan kata, apalagi pada kolom genres, berbeda dengan kolom yang berkonteks paragraf memerlukan term-frequency untuk mengubah kata menjadi vektor.
+- Menghitung nilai kemiripan antar baris data film menggunakan cosine similariy lalu menyimpannya dalam bentuk dataframe. jika nilai kemiripan mendekati 1 berarti dua item memiliki banyak kemiripan. nilai kemiripan mendekati 0 berarti dua item tidak memiliki banyak kemiripan. dan nilai kemiripan mendekati -1 berarti 2 item saling berlawanan.
+- Membuat fungsi get_recommendation() untuk mengeluarkan daftar nama-nama film yang disertai dengan urutan film yang paling mirip yang memiliki kemiripan dengan nama film yang dimasukkan sebagai parameter
 
-**Rubrik/Kriteria Tambahan (Opsional)**: 
-- Menyajikan dua solusi rekomendasi dengan algoritma yang berbeda.
-- Menjelaskan kelebihan dan kekurangan dari solusi/pendekatan yang dipilih.
+Berikut hasilnya yang diperoleh:
+
+**Nama film yang dimasukkan**
+![input](https://github.com/user-attachments/assets/a7b58aa5-7072-4ebf-bbe1-5c9c7ea5b643)
+
+**Daftar film yang direkomendasikan**
+![output](https://github.com/user-attachments/assets/d152f771-0d10-4c0d-a42c-fac5629ebf30)
+
+Berdasarkan pengamatan input dan output diatas menunjukkan bahwa daftar film yang direkomendasikan memiliki genre yang hampir semuanya sama. semakin bawah, semakin sedikit kesamaan nilainya.
 
 ## Evaluation
-Pada bagian ini Anda perlu menyebutkan metrik evaluasi yang digunakan. Kemudian, jelaskan hasil proyek berdasarkan metrik evaluasi tersebut.
+Yang dilakukan pada tahap ini diantaranya:
+- menampilkan pengamatan input dan output di sistem rekomendasi dengan membuat fungsi get_indices() untuk mencari letak-letak genre yang dimiliki film yang dimasukkan yang nanti diterapkan pada daftar hasil rekomendasi juga.
+- Menghitung performa dengan metrik Top-N Precision yang menilai seberapa baik sistem dalam merekomendasikan item yang relevan dalam daftar teratas (top-N) dari hasil rekomendasi.  $`Precision @ K = Number of Relevant Items in K / Total Number of Items in K`$
+  
+![top-n precision](https://github.com/user-attachments/assets/2d5cc4b5-2d56-4d48-a94a-fcc09bfc9f4a)
 
-Ingatlah, metrik evaluasi yang digunakan harus sesuai dengan konteks data, problem statement, dan solusi yang diinginkan.
+Berdasarkan evaluasi diatas dapat diketahui bahwa posisi teratas akan memang seharusnya memiliki nilai precision@K yang paling tinggi dibanding dengan yang posisi bawah.
 
-**Rubrik/Kriteria Tambahan (Opsional)**: 
-- Menjelaskan formula metrik dan bagaimana metrik tersebut bekerja.
+## References
+[1] P. Kumar, S. G. Kibriya, Y. Ajay, and N. Ilampiray, “Movie Recommender System Using Machine Learning Algorithms,” Journal of Physics Conference Series, vol. 1916, no. 1, p. 012052, May 2021, doi: 10.1088/1742-6596/1916/1/012052.
+[2] G. Ramadhan and E. B. Setiawan, “Collaborative Filtering Recommender System Based on Memory Based in Twitter Using Decision Tree Learning Classification (Case Study: Movie on Netflix),” Nov. 2022, doi: 10.1109/icacnis57039.2022.10055248.
+[3] P. P. Adikara, Y. A. Sari, S. Adinugroho, and B. D. Setiawan, “Movie recommender systems using hybrid model based on graphs with co-rated, genre, and closed caption features,” Register Jurnal Ilmiah Teknologi Sistem Informasi, vol. 7, no. 1, p. 31, Jan. 2021, doi: 10.26594/register.v7i1.2081.
+[4] M. Gupta, A. Thakkar, N. Aashish, V. Gupta, and D. P. S. Rathore, “Movie Recommender System Using Collaborative Filtering,” 2020 International Conference on Electronics and Sustainable Communication Systems (ICESC), Jul. 2020, doi: 10.1109/icesc48915.2020.9155879.
 
 **---Ini adalah bagian akhir laporan---**
 
-_Catatan:_
-- _Anda dapat menambahkan gambar, kode, atau tabel ke dalam laporan jika diperlukan. Temukan caranya pada contoh dokumen markdown di situs editor [Dillinger](https://dillinger.io/), [Github Guides: Mastering markdown](https://guides.github.com/features/mastering-markdown/), atau sumber lain di internet. Semangat!_
-- Jika terdapat penjelasan yang harus menyertakan code snippet, tuliskan dengan sewajarnya. Tidak perlu menuliskan keseluruhan kode project, cukup bagian yang ingin dijelaskan saja.
+
