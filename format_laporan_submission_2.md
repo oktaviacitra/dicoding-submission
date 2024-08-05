@@ -29,8 +29,9 @@ Solusi yang dapat dilakukan untuk memenuhi goals proyek ini diantaranya sebagai 
 ## Data Understanding
 Dataset yang digunakan pada proyek kali ini dibuat oleh Yueming yang di upload ke Kaggle pada tahun 2017. Sumber dataset: [IMDB 5000 Movie Dataset](https://www.kaggle.com/datasets/carolzhangdc/imdb-5000-movie-dataset). Pada dataset ini terdiri dari 5043 baris dan 28 kolom data. Kondisi khusus dari data:
 - memiliki jenis tipe data yang beragam untuk kolom-kolom yang ada diantaranya float64, int64, dan object
-- terdapat 6 kolom yang memiliki nilai yang penuh atau tidak memiliki nilai hilang
+- terdapat 6 kolom yang memiliki nilai yang lengkap atau bisa dikatakan kolom yang tidak memiliki nilai hilang, diantaranya genres, movie_title,num_voted_users, cast_total_facebook_likes, movie_imdb_link, dan imbd_score
 - terdapat data yang duplikat terutama pada kolom movie_title sebanyak 124
+- terdapat baris data yang memiliki nilai kosong sebanyak 301
 
 Pada proyek ini, fitur yang digunakan adalah sebagai berikut beserta alasan:
 
@@ -66,14 +67,16 @@ Berikut merupakan aktifitas lainnya dilakukan pada tahap ini:
 |melakukan one hot encoding terhadap kolom genres|supaya dapat dihitung nilai cosine similaritynya dengan representasi vektornya, one hot encoding dilakukan karena ini merupakan data kategorikal nominal bukan ordinal yang mengharuskan representasi urutan|(4618,3)|(4618,26)|
 |melakukan one hot encoding terhadap kolom content_rating|supaya dapat dihitung nilai cosine similaritynya dengan representasi vektornya, one hot encoding dilakukan karena ini merupakan data kategorikal nominal bukan ordinal yang mengharuskan representasi urutan||(4618,26)|(4618,43)|
 
+**catatan**
+- ***proyek ini tidak menggunakan vectorizer*** karena sudah terwakilili dengan hasil onehot encoding untuk kolom genres dan content_rating. hasil dari onehot encoding sudah seperti vektor yang dihasilkan dari binary count vectorizer. selain itu,  pada proyek kali ini, tidak perlu menggunakn term-frequency karena dalam satu baris tidak ada perulangan kata, apalagi pada kolom genres, berbeda dengan kolom yang berkonteks paragraf memerlukan term-frequency untuk mengubah kata menjadi vektor.
+
 ## Modeling
 
 Pemodelan yang dipilih pada proyek ini adalah content-based filtering menggunakan cosine similarity karena implementasi content-based filtering dengan cosine similarity dapat cepat menghitung kesamaan antar film-film yang direpresentasikan dalam ruang vektor, sehingga sistem rekomendasi memberikan hasil dengan waktu respons yang cepat, berbeda jika membuat model sistem rekomendasi menggunakan deep learning yang membutuhkan biaya tinggi.
 
 Yang dilakukan pada tahap ini diantaranya:
-- Kolom genres dan content_rating telah melalui proses encoding yang membuat bentuk datanya seperti telah melalui proses Binary Count Vectorizer dari modul sklearn. Pada proyek kali ini, tidak perlu menggunakn term-frequency karena dalam satu baris tidak ada perulangan kata, apalagi pada kolom genres, berbeda dengan kolom yang berkonteks paragraf memerlukan term-frequency untuk mengubah kata menjadi vektor.
 - Menghitung nilai kemiripan antar baris data film menggunakan cosine similariy lalu menyimpannya dalam bentuk dataframe. jika nilai kemiripan mendekati 1 berarti dua item memiliki banyak kemiripan. nilai kemiripan mendekati 0 berarti dua item tidak memiliki banyak kemiripan. dan nilai kemiripan mendekati -1 berarti 2 item saling berlawanan.
-- Membuat fungsi get_recommendation() untuk mengeluarkan daftar nama-nama film yang disertai dengan urutan film yang paling mirip yang memiliki kemiripan dengan nama film yang dimasukkan sebagai parameter. Cara kerja dari fungsi ini adalah yang pertama memanfaatkan fungsi argpartition untuk mengambil sejumlah nilai k tertinggi dari similarity data. Kemudian mengambil data dari tingkat kesamaan tertinggi ke terendah lalu dimasukkan ke dalam variabel closest dan yang terakhir ialah menghapus movie_title yang dicari menggunakan fungsi drop() agar tidak muncul dalam daftar rekomendasi karena sesama nilai akan menghasilkan nilai kesamaan tertinggi yaitu 1. Berikut merupakan penjelasan parameter dari fungsi get_recommendations() adalah sebagai berikut:
+- Membuat fungsi get_recommendation() untuk mengeluarkan daftar nama-nama film yang disertai dengan urutan film yang paling mirip yang memiliki kemiripan dengan nama film yang dimasukkan sebagai parameter. Cara kerja dari fungsi ini adalah yang pertama memanfaatkan fungsi argpartition (mengembalikan indeks yang akan mempartisi array dalam cara tertentu sehingga elemen pada indeks yang dihasilkan memenuhi kriteria tertentu) untuk mengambil sejumlah nilai k tertinggi dari similarity data. Kemudian mengambil data dari tingkat kesamaan tertinggi ke terendah lalu dimasukkan ke dalam variabel closest yang menampung baris data film yang memiliki kemiripan tinggi dan yang terakhir ialah menghapus movie_title yang dicari menggunakan fungsi drop() agar tidak muncul dalam daftar rekomendasi karena sesama nilai akan menghasilkan nilai kesamaan tertinggi yaitu 1. Berikut merupakan penjelasan parameter dari fungsi get_recommendations() adalah sebagai berikut:
 
 |nama|deskripsi|tipe data|
 |----|---------|---------|
