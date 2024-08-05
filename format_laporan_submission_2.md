@@ -14,15 +14,11 @@ Dalam merumuskan proyek ini dibangun penyataan masalah, tujuan, dan pernyataan s
 
 ### Problem Statements
 
-Berdasarkan latar belakang di atas, rincian masalahnya adalah
-- Bagaimana mengolah data agar bisa masuk ke pemodelan rekomendasi film-film yang banyak memiliki kemiripan?
-- Bagaimana membuat sistem rekomendasi film yang dengan peforma seakurat mungkin (minimal precision@N 85%) agar dapat meningkatkan ketertarikan pengguna?
+Berdasarkan latar belakang di atas, rincian masalahnya adalah **bagaimana memanfaatkan data film agar dapat meningkatkan kepuasan penonton mengembangkan sistem rekomendasi film yang lebih relevan dengan genre kesukaan pengguna?**
 
 ### Goals
 
-Untuk menjawab pertanyaan masalah di atas, maka akan dijabarkan sebagai berikut:
-- Model yang cocok untuk menyelesaikan masalah tersebut adalah model yang berbasis dengan konten atau biasa disebut Content-Based Filtering.
-- Melakukan evaluasi model sistem rekomendasi film dengan metrik precision@N 85%
+Untuk menjawab pertanyaan masalah di atas, maka tujuan dari proyek ini adalah **mampu mengembangkan model yang sepresisi mungkin dalam memberikan daftar film sesuai genre yang disukai oleh penonton dengan model yang berbasis dengan konten (content-based filtering) dengan model yang mencapai metrik precision@N 85%**
 
 ### Solution statements
 
@@ -31,19 +27,12 @@ Solusi yang dapat dilakukan untuk memenuhi goals proyek ini diantaranya sebagai 
 - Menampilkan detail data yang diuji dengan hasilnya untuk validasi kebenaran dari nilai metriknya
 
 ## Data Understanding
-Dataset yang digunakan pada proyek kali ini dibuat oleh Nikhil Narayan yang di upload ke Kaggle pada Juni 2024. Sumber dataset: Weather Type Classification. Pada dataset ini terdiri dari 5043 baris dan 28 kolom data. Kondisi khusus dari data:
+Dataset yang digunakan pada proyek kali ini dibuat oleh Yueming yang di upload ke Kaggle pada tahun 2017. Sumber dataset: [IMDB 5000 Movie Dataset](https://www.kaggle.com/datasets/carolzhangdc/imdb-5000-movie-dataset). Pada dataset ini terdiri dari 5043 baris dan 28 kolom data. Kondisi khusus dari data:
 - memiliki jenis tipe data yang beragam untuk kolom-kolom yang ada diantaranya float64, int64, dan object
 - terdapat 6 kolom yang memiliki nilai yang penuh atau tidak memiliki nilai hilang
+- terdapat data yang duplikat terutama pada kolom movie_title
 
-Karena terdapat 28 kolom, sedangkan pembangun model pada proyek ini menggunakan content-based filter yang menyeleksi data yang mirip berdasarkan isinya, maka perlu dilakukan seleksi kolom dan menghasilkan dataframe yang memiliki 3 kolom penting berikut ini:
-
-|Nama|Jenis|Tipe Data|Alasan|Jumlah Nilai Unik|
-|----|-----|---------|------|-----------------|
-|movie_title|independent|object|diperlukan untuk mencari film-film yang mirip dan mengembalikan nilai dalam bentuk nama-nama filmnya|4917|
-|genres|dependent|object|mewakili representasi dari sebuah film memiliki jalan cerita seperti apa|914|
-|content_rating|dependent|object|identifikasi mengenai segmen target penonton film|19|
-
-Pada proyek ini, hanya melakukan EDA Univariate karena hanya terdapat 2 data kategorikal yang bisa amati distribusinya. Karena nilai unik berjumlah sangat banyak di 2 kolom tersebut, maka ditampilkan horizontal bar chart untuk nilai yang memiliki kemunculan paling banyak
+Pada proyek ini, hanya melakukan EDA Univariate terhadap dua kolom yang menjadi dependent variable untuk model sistem rekomendasi film menggunakan content based filter berdasarkan genre dan content rating. Karena nilai unik berjumlah sangat banyak di 2 kolom tersebut, maka ditampilkan horizontal bar chart untuk nilai yang memiliki kemunculan paling banyak
 
 |Nama|Chart|Analisis|
 |----|-----|--------|
@@ -56,7 +45,18 @@ Yang dilakukan pada tahap ini diantaranya:
 - Memeriksa jumlah nilai unik pada setiap kolom
 
 ## Data Preparation
-Pada tahap ini perlu mempersiapkan data agar mudah diproses oleh model, apalagi jika masih mengandung kolom-kolom yang bertipe data object yang perlu dilakukan encoding untuk mengubahnya menjadi numerik supaya dapat dihitung nilai cosine similarity nya. Yang dilakukan pada tahap ini diantaranya:
+Pada tahap ini perlu mempersiapkan data agar mudah diproses oleh model, apalagi jika masih mengandung kolom-kolom yang bertipe data object yang perlu dilakukan encoding untuk mengubahnya menjadi numerik supaya dapat dihitung nilai cosine similarity nya.
+
+Karena terdapat 28 kolom, sedangkan pembangun model pada proyek ini menggunakan content-based filter yang menyeleksi data yang mirip berdasarkan isinya, maka perlu dilakukan seleksi kolom dan menghasilkan dataframe yang memiliki 3 kolom penting berikut ini:
+
+|Nama|Jenis|Tipe Data|Alasan|Jumlah Nilai Unik|
+|----|-----|---------|------|-----------------|
+|movie_title|independent|object|diperlukan untuk mencari film-film yang mirip dan mengembalikan nilai dalam bentuk nama-nama filmnya|4917|
+|genres|dependent|object|mewakili representasi dari sebuah film memiliki jalan cerita seperti apa|914|
+|content_rating|dependent|object|identifikasi mengenai segmen target penonton film|19|
+
+Berikut merupakan aktifitas lainnya dilakukan pada tahap ini:
+
 |Aktifitas|Alasan|Ukuran dataset semula|Ukuran dataset sesudah preproses|
 |---------|------|---------------------|--------------------------------|
 |menghapus nilai \xa0 pada kolom movie_title|agar tidak menjadi noise ketika pengguna mau mencari rekomendasi berdasarkan film yang sudah ditontonnya|(5043,3)|(5043,3)|
@@ -69,7 +69,13 @@ Pada tahap ini perlu mempersiapkan data agar mudah diproses oleh model, apalagi 
 Yang dilakukan pada tahap ini diantaranya:
 - Kolom genres dan content_rating telah melalui proses encoding yang membuat bentuk datanya seperti telah melalui proses Binary Count Vectorizer dari modul sklearn. Pada proyek kali ini, tidak perlu menggunakn term-frequency karena dalam satu baris tidak ada perulangan kata, apalagi pada kolom genres, berbeda dengan kolom yang berkonteks paragraf memerlukan term-frequency untuk mengubah kata menjadi vektor.
 - Menghitung nilai kemiripan antar baris data film menggunakan cosine similariy lalu menyimpannya dalam bentuk dataframe. jika nilai kemiripan mendekati 1 berarti dua item memiliki banyak kemiripan. nilai kemiripan mendekati 0 berarti dua item tidak memiliki banyak kemiripan. dan nilai kemiripan mendekati -1 berarti 2 item saling berlawanan.
-- Membuat fungsi get_recommendation() untuk mengeluarkan daftar nama-nama film yang disertai dengan urutan film yang paling mirip yang memiliki kemiripan dengan nama film yang dimasukkan sebagai parameter
+- Membuat fungsi get_recommendation() untuk mengeluarkan daftar nama-nama film yang disertai dengan urutan film yang paling mirip yang memiliki kemiripan dengan nama film yang dimasukkan sebagai parameter. Cara kerja dari fungsi ini adalah yang pertama memanfaatkan fungsi argpartition untuk mengambil sejumlah nilai k tertinggi dari similarity data. Kemudian mengambil data dari tingkat kesamaan tertinggi ke terendah lalu dimasukkan ke dalam variabel closest dan yang terakhir ialah menghapus movie_title yang dicari menggunakan fungsi drop() agar tidak muncul dalam daftar rekomendasi karena sesama nilai akan menghasilkan nilai kesamaan tertinggi yaitu 1. Berikut merupakan penjelasan parameter dari fungsi get_recommendations() adalah sebagai berikut:
+|nama|deskripsi|tipe data|
+|----|---------|---------|
+|movie_title|judul film yang ingin mencari film-film lainnya yang mirip|str|
+|similarity_data|dataframe yang berisi nilai cosine similarity setiap film yang ada|object|
+|items|dataframe yang asli untuk mendapatkan nilai sebenarnuya|object|
+|k|banyaknya jumlah film yang mirip|int|
 
 Berikut hasilnya yang diperoleh:
 
