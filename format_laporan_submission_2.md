@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-Pada proyek kali ini akan dibangun sistem rekomendasi film yang memberikan hasil berupa daftar film yang memiliki kemiripan (output) dengan karakteristik film yang diberikan (input).
+Pada proyek kali ini akan dibangun sistem rekomendasi film yang memberikan hasil berupa daftar film yang memiliki kemiripan (output) dengan karakteristik film yang diberikan (input). Membuat sistem rekomendasi film berdasarkan genres dan content ratings penting karena memungkinkan rekomendasi yang lebih relevan dan sesuai dengan preferensi serta batasan individu pengguna. Genre membantu mengidentifikasi jenis film yang diminati pengguna, seperti komedi, drama, atau aksi, sehingga sistem dapat menawarkan pilihan yang sesuai dengan selera mereka. Sementara itu, content ratings memastikan bahwa rekomendasi film sesuai dengan preferensi usia atau sensitivitas terhadap konten tertentu, menjaga pengalaman menonton yang nyaman dan aman. Dengan mempertimbangkan kedua aspek ini, sistem rekomendasi menjadi lebih akurat, personal, dan bertanggung jawab, meningkatkan kepuasan pengguna secara keseluruhan.
 
 ### Background
 
