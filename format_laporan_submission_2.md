@@ -96,10 +96,18 @@ Yang dilakukan pada tahap ini diantaranya:
 
 Berdasarkan evaluasi diatas dapat diketahui bahwa posisi teratas akan memang seharusnya memiliki nilai precision@K yang paling tinggi dibanding dengan yang posisi bawah.
 
+Catatan:
+- solusi sudah menjawab problem statement karena telah membuat model untuk memberikan daftar film yang mirip dengan film yang dimasukkan
+- sudah mencapai goals yang diharapkan karena berhasil membangun model yang memiliki presisi lebih dari 85%
+- solusi yang direncakan berdampak pada hasil karena dapat model bisa berjalan dengan cepat dengan penentuan kolom genres dan content_ratings yang telah berbentuk binary count vector
+
 ## References
 [1] P. Kumar, S. G. Kibriya, Y. Ajay, and N. Ilampiray, “Movie Recommender System Using Machine Learning Algorithms,” Journal of Physics Conference Series, vol. 1916, no. 1, p. 012052, May 2021, doi: 10.1088/1742-6596/1916/1/012052.
+
 [2] G. Ramadhan and E. B. Setiawan, “Collaborative Filtering Recommender System Based on Memory Based in Twitter Using Decision Tree Learning Classification (Case Study: Movie on Netflix),” Nov. 2022, doi: 10.1109/icacnis57039.2022.10055248.
+
 [3] P. P. Adikara, Y. A. Sari, S. Adinugroho, and B. D. Setiawan, “Movie recommender systems using hybrid model based on graphs with co-rated, genre, and closed caption features,” Register Jurnal Ilmiah Teknologi Sistem Informasi, vol. 7, no. 1, p. 31, Jan. 2021, doi: 10.26594/register.v7i1.2081.
+
 [4] M. Gupta, A. Thakkar, N. Aashish, V. Gupta, and D. P. S. Rathore, “Movie Recommender System Using Collaborative Filtering,” 2020 International Conference on Electronics and Sustainable Communication Systems (ICESC), Jul. 2020, doi: 10.1109/icesc48915.2020.9155879.
 
 **---Ini adalah bagian akhir laporan---**
