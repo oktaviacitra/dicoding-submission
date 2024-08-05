@@ -30,7 +30,15 @@ Solusi yang dapat dilakukan untuk memenuhi goals proyek ini diantaranya sebagai 
 Dataset yang digunakan pada proyek kali ini dibuat oleh Yueming yang di upload ke Kaggle pada tahun 2017. Sumber dataset: [IMDB 5000 Movie Dataset](https://www.kaggle.com/datasets/carolzhangdc/imdb-5000-movie-dataset). Pada dataset ini terdiri dari 5043 baris dan 28 kolom data. Kondisi khusus dari data:
 - memiliki jenis tipe data yang beragam untuk kolom-kolom yang ada diantaranya float64, int64, dan object
 - terdapat 6 kolom yang memiliki nilai yang penuh atau tidak memiliki nilai hilang
-- terdapat data yang duplikat terutama pada kolom movie_title
+- terdapat data yang duplikat terutama pada kolom movie_title sebanyak 124
+
+Pada proyek ini, fitur yang digunakan adalah sebagai berikut beserta alasan:
+
+|Nama|Jenis|Tipe Data|Alasan|Jumlah Nilai Unik|
+|----|-----|---------|------|-----------------|
+|movie_title|independent|object|diperlukan untuk mencari film-film yang mirip dan mengembalikan nilai dalam bentuk nama-nama filmnya|4917|
+|genres|dependent|object|mewakili representasi dari sebuah film memiliki jalan cerita seperti apa|914|
+|content_rating|dependent|object|identifikasi mengenai segmen target penonton film|19|
 
 Pada proyek ini, hanya melakukan EDA Univariate terhadap dua kolom yang menjadi dependent variable untuk model sistem rekomendasi film menggunakan content based filter berdasarkan genre dan content rating. Karena nilai unik berjumlah sangat banyak di 2 kolom tersebut, maka ditampilkan horizontal bar chart untuk nilai yang memiliki kemunculan paling banyak
 
@@ -47,29 +55,26 @@ Yang dilakukan pada tahap ini diantaranya:
 ## Data Preparation
 Pada tahap ini perlu mempersiapkan data agar mudah diproses oleh model, apalagi jika masih mengandung kolom-kolom yang bertipe data object yang perlu dilakukan encoding untuk mengubahnya menjadi numerik supaya dapat dihitung nilai cosine similarity nya.
 
-Karena terdapat 28 kolom, sedangkan pembangun model pada proyek ini menggunakan content-based filter yang menyeleksi data yang mirip berdasarkan isinya, maka perlu dilakukan seleksi kolom dan menghasilkan dataframe yang memiliki 3 kolom penting berikut ini:
-
-|Nama|Jenis|Tipe Data|Alasan|Jumlah Nilai Unik|
-|----|-----|---------|------|-----------------|
-|movie_title|independent|object|diperlukan untuk mencari film-film yang mirip dan mengembalikan nilai dalam bentuk nama-nama filmnya|4917|
-|genres|dependent|object|mewakili representasi dari sebuah film memiliki jalan cerita seperti apa|914|
-|content_rating|dependent|object|identifikasi mengenai segmen target penonton film|19|
-
 Berikut merupakan aktifitas lainnya dilakukan pada tahap ini:
 
 |Aktifitas|Alasan|Ukuran dataset semula|Ukuran dataset sesudah preproses|
 |---------|------|---------------------|--------------------------------|
+|menghapus kolom yang lain dan menyisakan 3 kolom diantaranya movie_title, genres, dan content_rating|karena untuk pada proyek ini akan membuat sistem rekomendasi film berdasarkan genres dan content_rating saja|(5043,28)|(5043,3)|
 |menghapus nilai \xa0 pada kolom movie_title|agar tidak menjadi noise ketika pengguna mau mencari rekomendasi berdasarkan film yang sudah ditontonnya|(5043,3)|(5043,3)|
 |menghapus baris duplikat|karena nilai unik pada kolom movie_title sejumlah 4917 sehingga terdapat kemungkinan banyak baris data yang duplikat|(5043,3)|(4919,3)|
 |menghapus baris data yang memiliki nilai hilang|tidak bisa dilakukan imputasi karena akan menyebabkan kesalahan analitik|(4919,3)|(4618,3)|
-|melakukan one hot encoding terhadap kolom genres|supaya dapat dihitung nilai cosine similaritynya dengan representasi vektornya|(4618,3)|(4618,26)|
-|melakukan one hot encoding terhadap kolom content_rating|supaya dapat dihitung nilai cosine similaritynya dengan representasi vektornya|(4618,26)|(4618,43)|
+|melakukan one hot encoding terhadap kolom genres|supaya dapat dihitung nilai cosine similaritynya dengan representasi vektornya, one hot encoding dilakukan karena ini merupakan data kategorikal nominal bukan ordinal yang mengharuskan representasi urutan|(4618,3)|(4618,26)|
+|melakukan one hot encoding terhadap kolom content_rating|supaya dapat dihitung nilai cosine similaritynya dengan representasi vektornya, one hot encoding dilakukan karena ini merupakan data kategorikal nominal bukan ordinal yang mengharuskan representasi urutan||(4618,26)|(4618,43)|
 
 ## Modeling
+
+Pemodelan yang dipilih pada proyek ini adalah content-based filtering menggunakan cosine similarity karena implementasi content-based filtering dengan cosine similarity dapat cepat menghitung kesamaan antar film-film yang direpresentasikan dalam ruang vektor, sehingga sistem rekomendasi memberikan hasil dengan waktu respons yang cepat, berbeda jika membuat model sistem rekomendasi menggunakan deep learning yang membutuhkan biaya tinggi.
+
 Yang dilakukan pada tahap ini diantaranya:
 - Kolom genres dan content_rating telah melalui proses encoding yang membuat bentuk datanya seperti telah melalui proses Binary Count Vectorizer dari modul sklearn. Pada proyek kali ini, tidak perlu menggunakn term-frequency karena dalam satu baris tidak ada perulangan kata, apalagi pada kolom genres, berbeda dengan kolom yang berkonteks paragraf memerlukan term-frequency untuk mengubah kata menjadi vektor.
 - Menghitung nilai kemiripan antar baris data film menggunakan cosine similariy lalu menyimpannya dalam bentuk dataframe. jika nilai kemiripan mendekati 1 berarti dua item memiliki banyak kemiripan. nilai kemiripan mendekati 0 berarti dua item tidak memiliki banyak kemiripan. dan nilai kemiripan mendekati -1 berarti 2 item saling berlawanan.
 - Membuat fungsi get_recommendation() untuk mengeluarkan daftar nama-nama film yang disertai dengan urutan film yang paling mirip yang memiliki kemiripan dengan nama film yang dimasukkan sebagai parameter. Cara kerja dari fungsi ini adalah yang pertama memanfaatkan fungsi argpartition untuk mengambil sejumlah nilai k tertinggi dari similarity data. Kemudian mengambil data dari tingkat kesamaan tertinggi ke terendah lalu dimasukkan ke dalam variabel closest dan yang terakhir ialah menghapus movie_title yang dicari menggunakan fungsi drop() agar tidak muncul dalam daftar rekomendasi karena sesama nilai akan menghasilkan nilai kesamaan tertinggi yaitu 1. Berikut merupakan penjelasan parameter dari fungsi get_recommendations() adalah sebagai berikut:
+
 |nama|deskripsi|tipe data|
 |----|---------|---------|
 |movie_title|judul film yang ingin mencari film-film lainnya yang mirip|str|
